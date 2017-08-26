@@ -4,7 +4,10 @@
 #include <functional>
 #include <ctime>
 
-#define SIZE 100
+#include "../../common/benchmark.h"
+#include "../../common/benchmark.cpp"
+
+#define SIZE 1000
 
 using namespace std;
 
@@ -36,7 +39,7 @@ void InsertionSort(vector<int>& arr)
 	}
 }
 
-void print(vector<int>& arr)
+void print(const vector<int>& arr)
 {
 	for (const int& val : arr)
 	{
@@ -57,7 +60,10 @@ int main()
 	}
 	print(arr);
 	cout << endl;
+	CPUTimer clk;
+	clk.Start();
 	InsertionSort(arr);
+	clk.Stop();
 	print(arr);
-	//system("pause");
+	cout << "InsertionSort : " << clk.microsecond() << " us." << endl;
 }
