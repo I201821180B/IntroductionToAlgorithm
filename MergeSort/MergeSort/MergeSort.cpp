@@ -71,7 +71,7 @@ void MergeSort(vector<int>& a, int p, int r)
 int main()
 {
 	std::default_random_engine generator(time(NULL));
-	std::uniform_int_distribution<int> dis(0, 1000);
+	std::uniform_int_distribution<int> dis(0, 1000000);
 	auto dice = std::bind(dis, generator);
 
 	vector<int> arr;
