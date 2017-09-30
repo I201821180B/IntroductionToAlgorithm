@@ -3,11 +3,13 @@
 priorityQueue::priorityQueue(const vector<int>& v)
 	: heap(v)
 {
-
+	
 }
 
-void priorityQueue::insert(int x)
+void priorityQueue::insert(int key)
 {
+	A.push_back(numeric_limits<int>::min());
+	increaseKey(A.size() - 1, key);
 }
 
 int priorityQueue::maximum()
@@ -28,7 +30,16 @@ int priorityQueue::extractMax()
 	return max;
 }
 
-void priorityQueue::increaseKey(int x, int k)
+void priorityQueue::increaseKey(int i, int key)
 {
-
+	if (key < A[i])
+	{
+		cerr << "new key is smaller than current key";
+	}
+	A[i] = key;
+	while (i > 1 && A[PARENT(i)] < A[i])
+	{
+		swap(i, PARENT(i));
+		i = PARENT(i);
+	}
 }
