@@ -73,6 +73,10 @@
     <IncludePath>D:\Code\C++\IntroductionToAlgorithm\common\common;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Code\C++\IntroductionToAlgorithm\common\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>D:\Code\C++\IntroductionToAlgorithm\common\common;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Code\C++\IntroductionToAlgorithm\common\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -90,6 +94,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
