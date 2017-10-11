@@ -1,9 +1,5 @@
 #include "BucketSort.h"
 
-#include <list>
-#include <iostream>
-#include <cstdint>
-
 void bucketSort(vector<int>& v, const int max)
 {
 	const int64_t n = v.size();

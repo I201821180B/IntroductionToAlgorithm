@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "common.h"
 #include "BucketSort.h"
+#include "common.h"
 
 using namespace std;
 

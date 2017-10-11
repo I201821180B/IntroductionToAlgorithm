@@ -2,6 +2,9 @@
 #define _BUCKETSORT_H_
 
 #include <vector>
+#include <list>
+#include <iostream>
+#include <cstdint>
 
 using namespace std;
 
