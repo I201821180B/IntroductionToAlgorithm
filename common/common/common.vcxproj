@@ -112,10 +112,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="benchmark.cpp" />
+    <ClCompile Include="vectorOperation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="benchmark.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="vectorOperation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

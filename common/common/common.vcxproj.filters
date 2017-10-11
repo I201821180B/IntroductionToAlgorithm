@@ -18,12 +18,18 @@
     <ClCompile Include="benchmark.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="vectorOperation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="benchmark.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="vectorOperation.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
