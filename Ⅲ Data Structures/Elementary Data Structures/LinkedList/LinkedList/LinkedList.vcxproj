@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{D01DA445-A2F5-4AFF-A45C-54A1BADB061E}</ProjectGuid>
+    <ProjectGuid>{7EBB6040-960F-49B5-91E0-B7A98B2F9D9D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LinkedList</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
@@ -135,12 +135,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="linkedList.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="linkedList.h" />
     <ClInclude Include="node.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="linkedList.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="node.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

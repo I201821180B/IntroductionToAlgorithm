@@ -3,26 +3,33 @@
 
 #include "node.h"
 
-#include <vector>
 #include <initializer_list>
+#include <string>
 
-using std::vector;
 using std::initializer_list;
+using std::string;
 
 template<typename T>
 class linkedList
 {
 public:
-	//linkedList(const vector<T>& v);
+	linkedList();
 	linkedList(initializer_list<T> il);
-	bool push(T x);
-	bool insert(T x);
-	bool search(T k);
+	~linkedList();
+	void insert(node<T>* x);
+	node<T>* search(node<T>* k);
+	void del(node<T>* x);
+	void print();
 private:
-	node* head;
-	node* nil;
+	//node* head;
+	node<T>* nil;
 };
 
+/** 
+ * wrong wording 
+ * template<> class linkedList<int>
+ */
+template class linkedList<int>;
+template class linkedList<string>;
+
 #endif
-
-
