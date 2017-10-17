@@ -8,8 +8,8 @@ using namespace std;
 
 int main()
 {
-	int size = 100000;
-	int max = 1000000;
+	const int size = 100000;
+	const int max = 1000000;
 
 	vector<int> v;
 	getRandomVector(v, size, 0, max);
