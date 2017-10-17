@@ -1,6 +1,7 @@
 #include "vectorOperation.h"
 
-void getRandomVector(vector<int>& v, size_t size, int from, int to)
+template<typename T>
+void getRandomVector(vector<T>& v, int32_t size, int32_t from, int32_t to)
 {
 	v.resize(0);
 	std::default_random_engine generator(time(NULL));

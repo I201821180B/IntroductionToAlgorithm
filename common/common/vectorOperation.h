@@ -3,13 +3,18 @@
 
 #include <iostream>
 #include <vector>
-#include <ctime>
 #include <random>
 #include <functional>
 
+#include <ctime>
+#include <cstdint>
+
 using namespace std;
 
-void getRandomVector(vector<int>& v, size_t size, int from, int to);
+template<typename T>
+void getRandomVector(vector<T>& v, int32_t size, int32_t from, int32_t to);
+
+template void getRandomVector<int32_t>(vector<int32_t>& v, int32_t size, int32_t from, int32_t to);
 
 template<typename T> 
 void printVector(vector<T>& v);
