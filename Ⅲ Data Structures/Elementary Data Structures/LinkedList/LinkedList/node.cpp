@@ -1,5 +1,6 @@
 #include "node.h"
 
+
 template<typename T>
 node<T>::node(const T & t) 
 	: data(t)
@@ -11,3 +12,6 @@ node<T>::node(const T & t)
 //{
 //	
 //}
+
+template struct node<int>;
+template struct node<string>;

@@ -17,7 +17,4 @@ struct node
 };
 
 
-template class node<int>;
-template class node<string>;
-
 #endif

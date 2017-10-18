@@ -25,11 +25,4 @@ private:
 	node<T>* nil;
 };
 
-/** 
- * wrong wording 
- * template<> class linkedList<int>
- */
-template class linkedList<int>;
-template class linkedList<string>;
-
 #endif

@@ -78,3 +78,10 @@ void linkedList<T>::print()
 	}
 	cout << endl;
 }
+
+/**
+* wrong wording
+* template<> class linkedList<int>
+*/
+template class linkedList<int>;
+template class linkedList<string>;
