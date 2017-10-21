@@ -1,9 +1,7 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
-#include <string>
 
-using std::string;
 
 template<typename T>
 struct node

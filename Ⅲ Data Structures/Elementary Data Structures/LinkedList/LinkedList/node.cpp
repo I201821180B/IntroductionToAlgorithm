@@ -1,5 +1,8 @@
 #include "node.h"
 
+#include <string>
+
+using std::string;
 
 template<typename T>
 node<T>::node(const T & t) 
