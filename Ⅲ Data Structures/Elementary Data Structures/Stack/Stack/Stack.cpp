@@ -7,8 +7,30 @@ inline stack<T>::stack()
 }
 
 template<typename T>
-stack<T>::stack(uint32_t size)
-	: size(size)
+stack<T>::stack(initializer_list<T> il)
 {
-	s = 
+	for()
+}
+
+template<typename T>
+stack<T>::~stack()
+{
+}
+
+template<typename T>
+bool stack<T>::stackEmpty()
+{
+	return false;
+}
+
+template<typename T>
+bool stack<T>::push()
+{
+	return false;
+}
+
+template<typename T>
+T stack<T>::pop()
+{
+	return T();
 }

@@ -2,15 +2,17 @@
 #define _STACK_H_
 
 #include <cstdint>
+#include <initializer_list>
 
-using namespace std;
+using std::uint32_t;
+using std::initializer_list;
 
 template<typename T>
 class stack
 {
 public:
 	stack();
-	stack(uint32_t size);
+	stack(initializer_list<T> il);
 	~stack();
 	bool stackEmpty();
 	bool push();
