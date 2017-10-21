@@ -1,4 +1,5 @@
 @echo off
+rem ls -force * -include .vs -recurse | rm -r -force
 del /q /s *.exe
 del /q /s *.db
 del /q /s *.ipch
