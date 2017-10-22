@@ -16,9 +16,11 @@ public:
 	queue();
 	queue(initializer_list<T> il);
 	~queue();
+	void push(T x);
+	void pop(T x);
 private:
 	linkedList l;
-	int32_t size;
+	//int32_t size;
 };
 
 #endif
