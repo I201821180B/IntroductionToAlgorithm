@@ -1,8 +1,6 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
-
-
 template<typename T>
 struct node
 {
