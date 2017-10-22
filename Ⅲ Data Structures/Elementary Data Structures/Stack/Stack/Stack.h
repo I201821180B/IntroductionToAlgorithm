@@ -15,14 +15,15 @@ class stack
 public:
 	stack();
 	stack(initializer_list<T> il);
-	~stack();
-	bool stackEmpty();
-	bool push();
+	//~stack();
+	bool isEmpty();
+	bool push(T x);
 	T pop();
+	uint32_t size();
 private:
 	linkedList<T> s;
-	uint32_t top;
-	uint32_t size;
+	//uint32_t top;
+	//uint32_t size;
 };
 
 #endif

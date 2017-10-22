@@ -2,42 +2,48 @@
 
 template<typename T>
 inline stack<T>::stack()
-	: size(0), top(0)
+	: s()
 {
 }
 
 template<typename T>
 stack<T>::stack(initializer_list<T> il)
+	: s(il)
 {
-	for (const auto& item : il)
-	{
-		node<T>* newnode = node<T>(item);
-		s.insert(newnode);
-	}
 }
 
+/*
 template<typename T>
 stack<T>::~stack()
 {
 	
 }
+*/
 
 template<typename T>
-bool stack<T>::stackEmpty()
+bool stack<T>::isEmpty()
 {
-	return false;
+	return !(s.size());
 }
 
 template<typename T>
-bool stack<T>::push()
+bool stack<T>::push(T x)
 {
-	return false;
+	return s.insert(x);
 }
 
 template<typename T>
 T stack<T>::pop()
 {
-	return T();
+	node<T>* temp = s[s.size()-1];
+	T res = temp->data;
+	return res;
+}
+
+template<typename T>
+uint32_t stack<T>::size()
+{
+	return s.size();
 }
 
 template class stack<int>;
