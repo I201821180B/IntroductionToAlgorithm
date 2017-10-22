@@ -9,12 +9,17 @@ inline stack<T>::stack()
 template<typename T>
 stack<T>::stack(initializer_list<T> il)
 {
-	for()
+	for (const auto& item : il)
+	{
+		node<T>* newnode = node<T>(item);
+		s.insert(newnode);
+	}
 }
 
 template<typename T>
 stack<T>::~stack()
 {
+	
 }
 
 template<typename T>
@@ -34,3 +39,6 @@ T stack<T>::pop()
 {
 	return T();
 }
+
+template class stack<int>;
+template class stack<string>;

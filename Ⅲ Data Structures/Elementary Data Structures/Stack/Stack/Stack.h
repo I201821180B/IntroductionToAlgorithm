@@ -1,6 +1,8 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
+#include "linkedList.h"
+
 #include <cstdint>
 #include <initializer_list>
 
@@ -18,7 +20,7 @@ public:
 	bool push();
 	T pop();
 private:
-	T* s;
+	linkedList<T> s;
 	uint32_t top;
 	uint32_t size;
 };
