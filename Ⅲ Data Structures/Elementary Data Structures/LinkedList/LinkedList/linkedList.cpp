@@ -19,12 +19,10 @@ template<typename T>
 linkedList<T>::linkedList(initializer_list<T> il)
 	: linkedList()
 {
-	size_ = 0;
 	for (auto& item : il)
 	{
-		node<T>* newnode = new node<T>(item);
-		insert(newnode);
-		size_++;
+		//node<T>* newnode = new node<T>(item);
+		insert(item);
 	}
 }
 
@@ -70,17 +68,35 @@ void linkedList<T>::insertAfter(node<T>* x, node<T>* n)
 }
 
 template<typename T>
-void linkedList<T>::insertNode(node<T>* x, const uint32_t idx = size_ - 1)
+void linkedList<T>::insertNode(node<T>* x, const uint32_t idx)
 {
+	//cout << "linkedList<T>::insertNode(node<T>* x, const uint32_t idx)" << endl;
 	node<T>* res = this->operator[](idx);
 	insertAfter(x, res); // £¿£¿£¿
 }
 
 template<typename T>
-void linkedList<T>::insert(T x, const uint32_t idx = size_ - 1)
+void linkedList<T>::insertNode(node<T>* x)
 {
+	//cout << "linkedList<T>::insertNode(node<T>* x)" << endl;
+	insertAfter(x, nil);
+}
+
+template<typename T>
+void linkedList<T>::insert(T x, const uint32_t idx)
+{
+	//idx = axis(idx);
+	//cout << "linkedList<T>::insert(T x, const uint32_t idx)" << endl;
 	node<T>* newnode = new node<T>(x);
 	insertNode(newnode, idx); // £¿£¿£¿
+}
+
+template<typename T>
+void linkedList<T>::insert(T x)
+{
+	//cout << "linkedList<T>::insert(T x)" << endl;
+	node<T>* newnode = new node<T>(x);
+	insertNode(newnode);
 }
 
 template<typename T>
@@ -124,7 +140,7 @@ template<typename T>
 void linkedList<T>::removeFrom(const uint32_t idx)
 {
 	node<T>* res = this->operator[](idx);
-	remove(res);
+	removeNode(res);
 }
 
 template<typename T>
@@ -149,6 +165,7 @@ void linkedList<T>::print(const uint32_t idx)
 template<typename T>
 node<T>* linkedList<T>::operator[](const uint32_t idx)
 {
+	//uint32_t idx = axis(i);
 	assert(idx < size_);
 	if (idx == size_ - 1)
 	{
@@ -165,6 +182,16 @@ node<T>* linkedList<T>::operator[](const uint32_t idx)
 }
 
 //template<typename T>
+//uint32_t linkedList<T>::axis(int idx)
+//{
+//	if (idx < 0)
+//	{
+//		return (-idx) - 1;
+//	}
+//	return idx;
+//}
+
+//template<typename T>
 //node<T>* linkedList<T>::locate(const uint32_t idx)
 //{
 //	
@@ -179,6 +206,8 @@ uint32_t linkedList<T>::size()
 template<typename T>
 void linkedList<T>::del(node<T>* x)
 {
+	if (!size_) 
+		return;
 	x->prev->next = x->next;
 	x->next->prev = x->prev;
 	delete x;
@@ -191,3 +220,4 @@ void linkedList<T>::del(node<T>* x)
 */
 template class linkedList<int>;
 template class linkedList<string>;
+
