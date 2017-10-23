@@ -71,7 +71,7 @@ template<typename T>
 void linkedList<T>::insertNode(node<T>* x, const uint32_t idx)
 {
 	//cout << "linkedList<T>::insertNode(node<T>* x, const uint32_t idx)" << endl;
-	node<T>* res = this->operator[](idx);
+	node<T>* res = locate(idx);
 	insertAfter(x, res); // £¿£¿£¿
 }
 
@@ -139,7 +139,7 @@ void linkedList<T>::remove(T x)
 template<typename T>
 void linkedList<T>::removeFrom(const uint32_t idx)
 {
-	node<T>* res = this->operator[](idx);
+	node<T>* res = locate(idx);
 	removeNode(res);
 }
 
@@ -155,30 +155,17 @@ void linkedList<T>::print()
 	cout << endl;
 }
 
-template<typename T>
-void linkedList<T>::print(const uint32_t idx)
-{
-	node<T>* res = this->operator[](idx);
-	cout << res->data << endl;
-}
+//template<typename T>
+//void linkedList<T>::print(const uint32_t idx)
+//{
+//	node<T>* res = locate(idx);
+//	cout << res->data << endl;
+//}
 
 template<typename T>
-node<T>* linkedList<T>::operator[](const uint32_t idx)
+T linkedList<T>::operator[](const uint32_t idx)
 {
-	//uint32_t idx = axis(i);
-	assert(idx < size_);
-	if (idx == size_ - 1)
-	{
-		return nil->prev;
-	}
-	node<T>* cursor = nil->next;
-	uint32_t iter = 0;
-	while (iter != idx)
-	{
-		cursor = cursor->next;
-		++iter;
-	}
-	return cursor;
+	return locate(idx)->data;
 }
 
 //template<typename T>
@@ -196,6 +183,25 @@ node<T>* linkedList<T>::operator[](const uint32_t idx)
 //{
 //	
 //}
+
+template<typename T>
+node<T>* linkedList<T>::locate(const uint32_t idx)
+{
+	//uint32_t idx = axis(i);
+	assert(idx < size_);
+	if (idx == size_ - 1)
+	{
+		return nil->prev;
+	}
+	node<T>* cursor = nil->next;
+	uint32_t iter = 0;
+	while (iter != idx)
+	{
+		cursor = cursor->next;
+		++iter;
+	}
+	return cursor;
+}
 
 template<typename T>
 uint32_t linkedList<T>::size()

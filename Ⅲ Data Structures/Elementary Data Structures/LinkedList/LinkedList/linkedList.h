@@ -31,10 +31,10 @@ public:
 	void removeFrom(const uint32_t idx);
 	void remove(T x);
 	void print();
-	void print(const uint32_t idx);
-	node<T>* operator[](const uint32_t idx);
+	//void print(const uint32_t idx);
+	T operator[](const uint32_t idx);
 	//uint32_t axis(int idx);
-	//node<T>* locate(const uint32_t idx);
+	node<T>* locate(const uint32_t idx);
 	uint32_t size();
 private:
 	//node* head;

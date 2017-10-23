@@ -27,5 +27,6 @@ int main()
 	l.print();
 	cout << l.size() << endl;
 
-	l.print(5);
+	//l.print(5);
+	cout << l[5] << endl;
 }
