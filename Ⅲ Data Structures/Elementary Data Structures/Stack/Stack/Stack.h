@@ -3,9 +3,11 @@
 
 #include "linkedList.h"
 
+#include <string>
 #include <cstdint>
 #include <initializer_list>
 
+using std::string;
 using std::uint32_t;
 using std::initializer_list;
 
@@ -17,9 +19,10 @@ public:
 	stack(initializer_list<T> il);
 	//~stack();
 	bool isEmpty();
-	bool push(T x);
+	void push(T x);
 	T pop();
 	uint32_t size();
+	void print();
 private:
 	linkedList<T> s;
 	//uint32_t top;
