@@ -39,23 +39,6 @@ linkedList<T>::~linkedList()
 	}
 }
 
-//template<typename T>
-//void linkedList<T>::insertToTail(node<T> * x)
-//{
-//	/*x->next = nil->next;
-//	nil->next = x;
-//	x->prev = nil;
-//	x->next->prev = x;
-//	size_++;*/
-//	insertAfter(x, nil); // £¿£¿£¿
-//}
-//
-//template<typename T>
-//void linkedList<T>::insertToTail(T x)
-//{
-//	node<T>* newnode = new node<T>(x);
-//	insertToTail(newnode); // £¿£¿£¿
-//}
 
 template<typename T>
 void linkedList<T>::insertAfter(node<T>* x, node<T>* n)
