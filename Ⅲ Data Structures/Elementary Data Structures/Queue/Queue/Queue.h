@@ -15,11 +15,14 @@ class queue
 public:
 	queue();
 	queue(initializer_list<T> il);
-	~queue();
-	void push(T x);
-	void pop(T x);
+	//~queue();
+	bool isEmpty();
+	void enqueue(T x);
+	T dequeue();
+	uint32_t size();
+	void print();
 private:
-	linkedList l;
+	linkedList<T> q;
 	//int32_t size;
 };
 
