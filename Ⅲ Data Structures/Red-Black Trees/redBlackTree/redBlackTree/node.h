@@ -13,6 +13,7 @@ class node
 public:
 	static enum iro { RED, BLACK, NIL };
 	node(iro _color, T _key);
+	node(iro _color);
 	//~node();
 	iro color() { return color_; }
 	void setColor(iro _color);

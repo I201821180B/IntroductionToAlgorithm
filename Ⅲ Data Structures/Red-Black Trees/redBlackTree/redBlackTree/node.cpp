@@ -3,8 +3,14 @@
 
 
 template<typename T>
-inline node<T>::node(iro _color, T _key)
+node<T>::node(iro _color, T _key)
 	: color_(_color), key_(_key)
+{
+}
+
+template<typename T>
+node<T>::node(iro _color)
+	: color_(_color)
 {
 }
 

@@ -6,6 +6,7 @@
 #include <memory>
 
 using std::shared_ptr;
+using std::make_shared;
 
 template<typename T>
 class rbTree
@@ -16,6 +17,7 @@ public:
 	void rbInsert(shared_ptr<node<T>>& z);
 private:
 	shared_ptr<node<T>> root_;
+	shared_ptr<node<T>> NIL;
 	void leftRotate(shared_ptr<node<T>>& x);
 	void rightRotate(shared_ptr<node<T>>& y);
 	void rbInsertFixup(shared_ptr<node<T>>& z);
