@@ -22,9 +22,9 @@ public:
 	node<T>* left() { return left_; }
 	node<T>* right() { return right_; }
 	node<T>* parent() { return parent_; }
-	void setLeft(const node<T>* _newleft);
-	void setRight(const node<T>* _newright);
-	void setParent(const node<T>* _newparent);
+	void setLeft(node<T>* _newleft);
+	void setRight(node<T>* _newright);
+	void setParent(node<T>* _newparent);
 private:
 	iro color_;
 	T key_;

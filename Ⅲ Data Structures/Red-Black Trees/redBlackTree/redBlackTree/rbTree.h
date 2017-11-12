@@ -3,10 +3,6 @@
 
 #include "node.h"
 
-#include <memory>
-
-using std::shared_ptr;
-using std::make_shared;
 
 template<typename T>
 class rbTree

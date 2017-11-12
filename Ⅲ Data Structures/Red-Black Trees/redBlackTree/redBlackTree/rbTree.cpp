@@ -53,6 +53,7 @@ void rbTree<T>::rbInsert(node<T>* z)
 	z->setLeft(nil_);
 	z->setRight(nil_);
 	z->setColor(node<T>::RED);
+	rbInsertFixup(z);
 }
 
 template<typename T>
@@ -128,6 +129,53 @@ void rbTree<T>::rbInsertFixup(node<T>* z)
 {
 	while (z->parent()->color() == node<T>::RED)
 	{
-
+		/*如果该节点在一个子树的左枝*/
+		if (z->parent() == z->parent()->parent()->left())
+		{
+			/*取得叔节点*/
+			node<T>* y = z->parent()->parent()->right();
+			/*case 1: z和父节点都是红色，叔节点也是红色*/
+			if (y->color() == node<T>::RED)
+			{
+				z->parent()->setColor(node<T>::BLACK);
+				y->setColor(node<T>::BLACK);
+				z->parent()->parent()->setColor(node<T>::RED);
+				z = z->parent()->parent();
+			}
+			/*case 2：z和父节点都是红色，叔节点是黑色，z为右孩子*/
+			else if (z == z->parent()->right())
+			{
+				z = z->parent();
+				leftRotate(z);
+			}
+			/*case 3：旋转之后两边不平衡*/
+			z->parent()->setColor(node<T>::BLACK);
+			z->parent()->parent()->setColor(node<T>::RED);
+			rightRotate(z);
+		}
+		/*如果该节点在一个子树的右枝*/
+		else
+		{
+			node<T>* y = z->parent()->parent()->left();
+			/*case 1*/
+			if (y->color() == node<T>::RED)
+			{
+				z->parent()->setColor(node<T>::BLACK);
+				y->setColor(node<T>::BLACK);
+				z->parent()->parent()->setColor(node<T>::RED);
+				z = z->parent()->parent();
+			}
+			/*case 2*/
+			else if (z == z->parent()->left())
+			{
+				z = z->parent();
+				rightRotate(z);
+			}
+			/*case 3*/
+			z->parent()->setColor(node<T>::BLACK);
+			z->parent()->parent()->setColor(node<T>::RED);
+			leftRotate(z);
+		}
 	}
+	root_->setColor(node<T>::BLACK);
 }
