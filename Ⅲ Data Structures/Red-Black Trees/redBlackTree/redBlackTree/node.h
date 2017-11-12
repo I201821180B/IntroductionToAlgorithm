@@ -12,25 +12,25 @@ class node
 {
 public:
 	static enum iro { RED, BLACK, NIL };
-	node(iro _color, T _key);
-	node(iro _color);
+	explicit node(iro _color, T _key);
+	explicit node(iro _color);
 	//~node();
 	iro color() { return color_; }
 	void setColor(iro _color);
 	T& key() { return key_; }
 	void setKey(T _key);
-	shared_ptr<node<T>> left() { return left_; }
-	shared_ptr<node<T>> right() { return right_; }
-	shared_ptr<node<T>> parent() { return parent_; }
-	void setLeft(const shared_ptr<node<T>>& _newleft);
-	void setRight(const shared_ptr<node<T>>& _newright);
-	void setParent(const shared_ptr<node<T>>& _newparent);
+	node<T>* left() { return left_; }
+	node<T>* right() { return right_; }
+	node<T>* parent() { return parent_; }
+	void setLeft(const node<T>* _newleft);
+	void setRight(const node<T>* _newright);
+	void setParent(const node<T>* _newparent);
 private:
 	iro color_;
 	T key_;
-	shared_ptr<node<T>> left_;
-	shared_ptr<node<T>> right_;
-	shared_ptr<node<T>> parent_;
+	node<T>* left_;
+	node<T>* right_;
+	node<T>* parent_;
 };
 
 #endif

@@ -12,15 +12,15 @@ template<typename T>
 class rbTree
 {
 public:
-	rbTree();
+	explicit rbTree();
 	~rbTree();
-	void rbInsert(shared_ptr<node<T>>& z);
+	void rbInsert(node<T>* z);
 private:
-	shared_ptr<node<T>> root_;
-	shared_ptr<node<T>> NIL;
-	void leftRotate(shared_ptr<node<T>>& x);
-	void rightRotate(shared_ptr<node<T>>& y);
-	void rbInsertFixup(shared_ptr<node<T>>& z);
+	node<T>* root_;
+	node<T>* nil_;
+	void leftRotate(node<T>* x);
+	void rightRotate(node<T>* y);
+	void rbInsertFixup(node<T>* z);
 };
 
 #endif

@@ -4,7 +4,12 @@
 template<typename T>
 rbTree<T>::rbTree()
 {
-	NIL = make_shared<node<T>>(node<T>::iro::NIL);
+	nil_ = new node<T>(node<T>::NIL);
+	root_ = nil_;
+	/*root_ = new node<T>(node<T>::BLACK);
+	root_->setParent(nil_);
+	root_->setLeft(nil_);
+	root_->setRight(nil_);*/
 }
 
 template<typename T>
@@ -13,20 +18,52 @@ rbTree<T>::~rbTree()
 }
 
 template<typename T>
-void rbTree<T>::rbInsert(shared_ptr<node<T>>& z)
+void rbTree<T>::rbInsert(node<T>* z)
 {
-	
+	node<T>* y = nil_;
+	node<T>* x = root_;
+	// go through
+	while (x.get() != nil_.get())
+	{
+		y = x;
+		if (z->key() < x->key())
+		{
+			x = x->left();
+		}
+		else
+		{
+			x = x->right();
+		}
+	}
+	//z->setParent(y);
+	// if no data in rbTree
+	if (y.get() == nil_.get())
+	{
+		root_ = z;
+	}
+	else if (z->key() < y->key())
+	{
+		y->setLeft(z);
+	}
+	else
+	{
+		y->setRight(z);
+	}
+	z->setParent(y);
+	z->setLeft(nil_);
+	z->setRight(nil_);
+	z->setColor(node<T>::RED);
 }
 
 template<typename T>
-void rbTree<T>::leftRotate(shared_ptr<node<T>>& x)
+void rbTree<T>::leftRotate(node<T>* x)
 {
 	/*set right node of x*/
-	shared_ptr<node<T>> y(x->right());
+	node<T>* y(x->right());
 	x->setRight(y->left());
 
 	/*set parent of y's left node*/
-	if (y->left()->color() != node<T>::iro::NIL)
+	if (y->left()->color() != node<T>::NIL)
 	{
 		y->left()->setParent(x);
 	}
@@ -35,7 +72,7 @@ void rbTree<T>::leftRotate(shared_ptr<node<T>>& x)
 	y->setParent(x->parent());
 	
 	/*set x's parent left or right node*/
-	if (x->parent()->color() == node<T>::iro::NIL)
+	if (x->parent()->color() == node<T>::NIL)
 	{
 		root_ = y;
 	}
@@ -53,14 +90,14 @@ void rbTree<T>::leftRotate(shared_ptr<node<T>>& x)
 }
 
 template<typename T>
-void rbTree<T>::rightRotate(shared_ptr<node<T>>& y)
+void rbTree<T>::rightRotate(node<T>* y)
 {
 	/*set left node of y*/
-	shared_ptr<node<T>> x(y->left());
+	node<T>* x(y->left());
 	y->setLeft(x->right());
 
 	/*set parent node of x's right node */
-	if (x->right()->color() != node<T>::iro::NIL)
+	if (x->right()->color() != node<T>::NIL)
 	{
 		x->right()->setParent(y);
 	}
@@ -69,7 +106,7 @@ void rbTree<T>::rightRotate(shared_ptr<node<T>>& y)
 	x->setParent(y->parent());
 	
 	/*set y's parent left or right node*/
-	if (y->parent()->color() == node<T>::iro::NIL)
+	if (y->parent()->color() == node<T>::NIL)
 	{
 		root_ = x;
 	}
@@ -87,6 +124,10 @@ void rbTree<T>::rightRotate(shared_ptr<node<T>>& y)
 }
 
 template<typename T>
-void rbTree<T>::rbInsertFixup(shared_ptr<node<T>>& z)
+void rbTree<T>::rbInsertFixup(node<T>* z)
 {
+	while (z->parent()->color() == node<T>::RED)
+	{
+
+	}
 }
