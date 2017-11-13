@@ -8,15 +8,22 @@ template<typename T>
 class rbTree
 {
 public:
+	typedef node<T>::RED RED;
+	typedef node<T>::BLACK BLACK;
+	typedef node<T>::NIL NIL;
+	typedef node<T>* pNode;
 	explicit rbTree();
 	~rbTree();
-	void rbInsert(node<T>* z);
+	void rbInsert(pNode z);
+	void rbDelete(pNode z);
 private:
-	node<T>* root_;
-	node<T>* nil_;
-	void leftRotate(node<T>* x);
-	void rightRotate(node<T>* y);
-	void rbInsertFixup(node<T>* z);
+	pNode root_;
+	pNode nil_;
+	void leftRotate(pNode x);
+	void rightRotate(pNode y);
+	void rbInsertFixup(pNode z);
+	void rbTransplant(pNode u, pNode v);
+	void rbDeleteFixup(pNode x);
 };
 
 #endif
