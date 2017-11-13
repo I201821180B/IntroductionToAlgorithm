@@ -18,7 +18,7 @@ rbTree<T>::~rbTree()
 }
 
 template<typename T>
-void rbTree<T>::rbInsert(pNode z)
+void rbTree<T>::rbInsert(pNode _z)
 {
 	pNode y = nil_;
 	pNode x = root_;
@@ -26,7 +26,7 @@ void rbTree<T>::rbInsert(pNode z)
 	while (x != nil_)
 	{
 		y = x;
-		if (z->key() < x->key())
+		if (_z->key() < x->key())
 		{
 			x = x->left();
 		}
@@ -35,62 +35,62 @@ void rbTree<T>::rbInsert(pNode z)
 			x = x->right();
 		}
 	}
-	//z->setParent(y);
+	//_z->setParent(y);
 	// if no data in rbTree
 	if (y == nil_))
 	{
-		root_ = z;
+		root_ = _z;
 	}
-	else if (z->key() < y->key())
+	else if (_z->key() < y->key())
 	{
-		y->setLeft(z);
+		y->setLeft(_z);
 	}
 	else
 	{
-		y->setRight(z);
+		y->setRight(_z);
 	}
-	z->setParent(y);
-	z->setLeft(nil_);
-	z->setRight(nil_);
-	z->setColor(RED);
-	rbInsertFixup(z);
+	_z->setParent(y);
+	_z->setLeft(nil_);
+	_z->setRight(nil_);
+	_z->setColor(RED);
+	rbInsertFixup(_z);
 }
 
 template<typename T>
-void rbTree<T>::rbDelete(pNode z)
+void rbTree<T>::rbDelete(pNode _z)
 {
-	pNode y = z;
+	pNode y = _z;
 	pNode x = nullptr;
 	node<T>::iro yOriginColor = y->color();
-	if (z->left() == nil_)
+	if (_z->left() == nil_)
 	{
-		x = z->right();
-		rbTransplant(z, z->right());
+		x = _z->right();
+		rbTransplant(_z, _z->right());
 	}
-	else if (z->right() == nil_)
+	else if (_z->right() == nil_)
 	{
-		x = z->left();
-		rbTransplant(z, z->left());
+		x = _z->left();
+		rbTransplant(_z, _z->left());
 	}
 	else
 	{
-		y = treeMinimum(z->right());
+		y = treeMinimum(_z->right());
 		yOriginColor = y->color();
 		x = y->right();
-		if (y->parent() == z)
+		if (y->parent() == _z)
 		{
 			x->setParent(y);
 		}
 		else
 		{
 			rbTransplant(y, y->right());
-			y->setRight(z->right);
+			y->setRight(_z->right);
 			y->right()->setParent(y);
 		}
-		rbTransplant(z, y);
-		y->setLeft(z->left());
+		rbTransplant(_z, y);
+		y->setLeft(_z->left());
 		y->left()->setParent(y);
-		y->setColor(z->color());
+		y->setColor(_z->color());
 	}
 	if (yOriginColor == BLACK)
 	{
@@ -99,208 +99,208 @@ void rbTree<T>::rbDelete(pNode z)
 }
 
 template<typename T>
-void rbTree<T>::leftRotate(pNode x)
+void rbTree<T>::leftRotate(pNode _x)
 {
-	/*set right node of x*/
-	pNode y(x->right());
-	x->setRight(y->left());
+	/*set right node of _x*/
+	pNode y(_x->right());
+	_x->setRight(y->left());
 
 	/*set parent of y's left node*/
 	if (y->left()->color() != NIL)
 	{
-		y->left()->setParent(x);
+		y->left()->setParent(_x);
 	}
 
 	/*set parent node of y*/
-	y->setParent(x->parent());
+	y->setParent(_x->parent());
 	
-	/*set x's parent left or right node*/
-	if (x->parent()->color() == NIL)
+	/*set _x's parent left or right node*/
+	if (_x->parent()->color() == NIL)
 	{
 		root_ = y;
 	}
-	else if (x == x->pareant()->left())
+	else if (_x == _x->pareant()->left())
 	{
-		x->parent()->setLeft(y);
+		_x->parent()->setLeft(y);
 	}
 	else
 	{
-		x->parent()->setRight(y);
+		_x->parent()->setRight(y);
 	}
 
-	y->setLeft(x);
-	x->setParent(y);
+	y->setLeft(_x);
+	_x->setParent(y);
 }
 
 template<typename T>
-void rbTree<T>::rightRotate(pNode y)
+void rbTree<T>::rightRotate(pNode _y)
 {
-	/*set left node of y*/
-	pNode x(y->left());
-	y->setLeft(x->right());
+	/*set left node of _y*/
+	pNode x(_y->left());
+	_y->setLeft(x->right());
 
 	/*set parent node of x's right node */
 	if (x->right()->color() != NIL)
 	{
-		x->right()->setParent(y);
+		x->right()->setParent(_y);
 	}
 
 	/*set parent node of x*/
-	x->setParent(y->parent());
+	x->setParent(_y->parent());
 	
-	/*set y's parent left or right node*/
-	if (y->parent()->color() == NIL)
+	/*set _y's parent left or right node*/
+	if (_y->parent()->color() == NIL)
 	{
 		root_ = x;
 	}
-	else if (y == y->parent()->left())
+	else if (_y == _y->parent()->left())
 	{
-		y->parent()->setLeft(x);
+		_y->parent()->setLeft(x);
 	}
 	else
 	{
-		y->parent()->setRight(x);
+		_y->parent()->setRight(x);
 	}
 
-	x->setRight(y);
-	y->setParent(x);
+	x->setRight(_y);
+	_y->setParent(x);
 }
 
 template<typename T>
-void rbTree<T>::rbInsertFixup(pNode z)
+void rbTree<T>::rbInsertFixup(pNode _z)
 {
-	while (z->parent()->color() == RED)
+	while (_z->parent()->color() == RED)
 	{
 		/*如果该节点在一个子树的左枝*/
-		if (z->parent() == z->parent()->parent()->left())
+		if (_z->parent() == _z->parent()->parent()->left())
 		{
 			/*取得叔节点*/
-			pNode y = z->parent()->parent()->right();
-			/*case 1: z和父节点都是红色，叔节点也是红色*/
+			pNode y = _z->parent()->parent()->right();
+			/*case 1: _z和父节点都是红色，叔节点也是红色*/
 			if (y->color() == RED)
 			{
-				z->parent()->setColor(BLACK);
+				_z->parent()->setColor(BLACK);
 				y->setColor(BLACK);
-				z->parent()->parent()->setColor(RED);
-				z = z->parent()->parent();
+				_z->parent()->parent()->setColor(RED);
+				_z = _z->parent()->parent();
 			}
-			/*case 2：z和父节点都是红色，叔节点是黑色，z为右孩子*/
-			else if (z == z->parent()->right())
+			/*case 2：_z和父节点都是红色，叔节点是黑色，_z为右孩子*/
+			else if (_z == _z->parent()->right())
 			{
-				z = z->parent();
-				leftRotate(z);
+				_z = _z->parent();
+				leftRotate(_z);
 			}
-			/*case 3：z和父节点都是红色，叔节点是黑色，z为左孩子*/
-			z->parent()->setColor(BLACK);
-			z->parent()->parent()->setColor(RED);
-			rightRotate(z);
+			/*case 3：_z和父节点都是红色，叔节点是黑色，_z为左孩子*/
+			_z->parent()->setColor(BLACK);
+			_z->parent()->parent()->setColor(RED);
+			rightRotate(_z);
 		}
 		/*如果该节点在一个子树的右枝*/
 		else
 		{
-			pNode y = z->parent()->parent()->left();
+			pNode y = _z->parent()->parent()->left();
 			/*case 1*/
 			if (y->color() == RED)
 			{
-				z->parent()->setColor(BLACK);
+				_z->parent()->setColor(BLACK);
 				y->setColor(BLACK);
-				z->parent()->parent()->setColor(RED);
-				z = z->parent()->parent();
+				_z->parent()->parent()->setColor(RED);
+				_z = _z->parent()->parent();
 			}
 			/*case 2*/
-			else if (z == z->parent()->left())
+			else if (_z == _z->parent()->left())
 			{
-				z = z->parent();
-				rightRotate(z);
+				_z = _z->parent();
+				rightRotate(_z);
 			}
 			/*case 3*/
-			z->parent()->setColor(BLACK);
-			z->parent()->parent()->setColor(RED);
-			leftRotate(z);
+			_z->parent()->setColor(BLACK);
+			_z->parent()->parent()->setColor(RED);
+			leftRotate(_z);
 		}
 	}
 	root_->setColor(BLACK);
 }
 
 template<typename T>
-void rbTree<T>::rbTransplant(pNode u, pNode v)
+void rbTree<T>::rbTransplant(pNode _u, pNode _v)
 {
-	if (u->parent() == nil_)
+	if (_u->parent() == nil_)
 	{
-		root_ = v;
+		root_ = _v;
 	}
-	else if (u == u->parent()->left())
+	else if (_u == _u->parent()->left())
 	{
-		u->parent()->setLeft(v);
+		_u->parent()->setLeft(_v);
 	}
 	else
 	{
-		u->parent()->setRight(v);
+		_u->parent()->setRight(_v);
 	}
-	v->setParent(u->parent());
+	_v->setParent(_u->parent());
 }
 
 template<typename T>
-void rbTree<T>::rbDeleteFixup(pNode x)
+void rbTree<T>::rbDeleteFixup(pNode _x)
 {
-	while (x != root_ && x->color() == BLACK)
+	while (_x != root_ && _x->color() == BLACK)
 	{
-		if (x == x->parent()->left())
+		if (_x == _x->parent()->left())
 		{
-			pNode w = x->parent()->right();
+			pNode w = _x->parent()->right();
 			if (w->color() == RED)
 			{
 				w->setColor(BLACK);
-				x->parent()->setColor(RED);
-				leftRotate(x->parent());
-				w = x->parent()->right();
+				_x->parent()->setColor(RED);
+				leftRotate(_x->parent());
+				w = _x->parent()->right();
 			}
 			if (w->left()->color() == BLACK && w->right()->color() == BLACK)
 			{
 				w->setColor(RED);
-				x = x->parent();
+				_x = _x->parent();
 			}
 			else if (w->right()->color() == BLACK)
 			{
 				w->left()->setColor(BLACK);
 				w->setColor(RED);
 				rightRotate(w);
-				w = x->parent()->right();
+				w = _x->parent()->right();
 			}
-			w->setColor(x->parent()->color());
-			x->parent()->setColor(BLACK);
+			w->setColor(_x->parent()->color());
+			_x->parent()->setColor(BLACK);
 			W->right()->setColor(BLACK);
-			leftRotate(x->parent());
-			x = root_;
+			leftRotate(_x->parent());
+			_x = root_;
 		}
 		else
 		{
-			pNode w = x->parent()->left();
+			pNode w = _x->parent()->left();
 			if (w->color() == RED)
 			{
 				w->setColor(BLACK);
-				x->parent()->setColor(RED);
-				rightRotate(x->parent());
-				w = x->parent()->left();
+				_x->parent()->setColor(RED);
+				rightRotate(_x->parent());
+				w = _x->parent()->left();
 			}
 			if (w->right()->color() == BLACK && w->left()->color() == BLACK)
 			{
 				w->setColor(RED);
-				x = x->parent();
+				_x = _x->parent();
 			}
 			else if (w->left()->color() == BLACK)
 			{
 				w->right()->setColor(BLACK);
 				w->setColor(RED);
 				leftRotate(w);
-				w = x->parent()->left();
+				w = _x->parent()->left();
 			}
-			w->setColor(x->parent()->color());
-			x->parent()->setColor(BLACK);
+			w->setColor(_x->parent()->color());
+			_x->parent()->setColor(BLACK);
 			W->left()->setColor(BLACK);
-			rightRotate(x->parent());
-			x = root_;
+			rightRotate(_x->parent());
+			_x = root_;
 		}
 	}
-	x->setColor(BLACK);
+	_x->setColor(BLACK);
 }

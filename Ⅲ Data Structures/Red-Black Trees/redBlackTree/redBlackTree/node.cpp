@@ -27,19 +27,19 @@ void node<T>::setKey(T _key)
 }
 
 template<typename T>
-void node<T>::setLeft(node<T>* _newleft)
+void node<T>::setLeft(pNode _newleft)
 {
 	this->left_ = _newleft;
 }
 
 template<typename T>
-void node<T>::setRight(node<T>* _newright)
+void node<T>::setRight(pNode _newright)
 {
 	this->right_ = _newright;
 }
 
 template<typename T>
-void node<T>::setParent(node<T>* _newparent)
+void node<T>::setParent(pNode _newparent)
 {
 	this->parent_ = _newparent;
 }
