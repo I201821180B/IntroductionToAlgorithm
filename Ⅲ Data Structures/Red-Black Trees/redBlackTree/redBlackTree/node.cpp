@@ -3,14 +3,14 @@
 
 
 template<typename T>
-node<T>::node(iro _color, T _key)
-	: color_(_color), key_(_key)
+node<T>::node(iro _color)
+	: color_(_color), left_(nullptr), right_(nullptr), parent_(nullptr)
 {
 }
 
 template<typename T>
-node<T>::node(iro _color)
-	: color_(_color)
+node<T>::node(iro _color, T _key)
+	: node(_color), key_(_key)
 {
 }
 
