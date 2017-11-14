@@ -11,7 +11,7 @@ template<typename T>
 class node
 {
 public:
-	typedef node<T>* pNode;
+	using pNode = node<T>*;
 	static enum iro { RED, BLACK, NIL };
 	node(iro _color, T _key);
 	explicit node(iro _color);

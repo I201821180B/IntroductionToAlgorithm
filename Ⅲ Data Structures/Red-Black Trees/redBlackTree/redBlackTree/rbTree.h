@@ -8,10 +8,10 @@ template<typename T>
 class rbTree
 {
 public:
-	typedef node<T>::RED RED;
-	typedef node<T>::BLACK BLACK;
-	typedef node<T>::NIL NIL;
-	typedef node<T>* pNode;
+	using RED = node<T>::RED;
+	using BLACK = node<T>::BLACK;
+	using NIL = node<T>::NIL;
+	using pNode = node<T>*;
 	explicit rbTree();
 	~rbTree();
 	void rbInsert(pNode _z);
