@@ -1,7 +1,6 @@
 #include "node.h"
 
 
-
 //template<typename T>
 //node<T>::node(iro _color, T _key)
 //	: color_(_color), key_(_key)
@@ -22,7 +21,7 @@
 
 template<typename T>
 node<T>::node(T _key)
-	: key_(_key)
+	: key_(_key), left_(nullptr), right_(nullptr), parent_(nullptr)
 {
 }
 
@@ -52,4 +51,7 @@ void node<T>::setParent(pNode _newparent)
 
 
 template class node<int>;
-template class node<string>;
+template class node<std::string>;
+
+
+

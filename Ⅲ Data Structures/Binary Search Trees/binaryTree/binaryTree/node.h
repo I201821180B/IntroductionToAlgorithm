@@ -1,11 +1,12 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
+#include "basic.h"
+
 #include <string>
 //#include <memory>
 
 //using std::shared_ptr;
-using std::string;
 
 template<typename T>
 class node
