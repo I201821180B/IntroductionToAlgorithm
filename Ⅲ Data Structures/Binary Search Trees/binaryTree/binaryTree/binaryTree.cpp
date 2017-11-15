@@ -54,10 +54,18 @@ void binaryTree<T>::inorderTreeWalk(pNode _x)
 	}
 }
 
+template<typename T>
+void binaryTree<T>::print()
+{
+	inorderTreeWalk(root_);
+	std::cout << std::endl;
+}
+
 /**
- * 类模板的成员函数的返回值是类型别名时，需要使用typename class<T>::alias这种形式
- * 涉及到一个在 template（模板）中的 nested dependent type name（嵌套依赖类型名）
- * 的任何时候，你必须把单词 typename 放在紧挨着它的前面
+ * 1. 类模板的成员函数的返回值是类型别名时，需要使用typename class<T>::alias这种形式
+ * 2. 涉及到一个在 template（模板）中的 nested dependent type name（嵌套依赖类型名）
+ *    的任何时候，你必须把单词 typename 放在紧挨着它的前面
+ * 3. 这样才能告诉编译器把它当作一个类型来处理，否则会被当成是别的标识符
  */
 template<typename T>
 typename binaryTree<T>::pNode binaryTree<T>::treeSearch(pNode _x, T _key)
@@ -96,6 +104,13 @@ typename binaryTree<T>::pNode binaryTree<T>::iterativeTreeSearch(pNode _x, T _ke
 }
 
 template<typename T>
+typename binaryTree<T>::pNode binaryTree<T>::search(T _key)
+{
+	
+	return iterativeTreeSearch(root_, _key);
+}
+
+template<typename T>
 typename binaryTree<T>::pNode binaryTree<T>::treeMinimum(pNode _x)
 {
 	/*遍历到最左边的一个点*/
@@ -107,6 +122,12 @@ typename binaryTree<T>::pNode binaryTree<T>::treeMinimum(pNode _x)
 }
 
 template<typename T>
+typename binaryTree<T>::pNode binaryTree<T>::min()
+{
+	return treeMinimum(root_);
+}
+
+template<typename T>
 typename binaryTree<T>::pNode binaryTree<T>::treeMaximum(pNode _x)
 {
 	/*遍历到最右边的一个点*/
@@ -115,6 +136,12 @@ typename binaryTree<T>::pNode binaryTree<T>::treeMaximum(pNode _x)
 		_x = _x->right();
 	}
 	return _x;
+}
+
+template<typename T>
+typename binaryTree<T>::pNode binaryTree<T>::max()
+{
+	return treeMaximum(root_);
 }
 
 template<typename T>
