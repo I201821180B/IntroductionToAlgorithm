@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="basic.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="rbTree.h" />
   </ItemGroup>

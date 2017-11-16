@@ -3,9 +3,10 @@
 
 template<typename T>
 rbTree<T>::rbTree()
+	: /*nil_(nullptr), */root_(nullptr)
 {
-	nil_ = new node<T>(NIL);
-	root_ = nil_;
+	nil_ = new node<T>(BLACK);
+	//root_ = nil_;
 	/*root_ = new node<T>(BLACK);
 	root_->setParent(nil_);
 	root_->setLeft(nil_);
@@ -13,17 +14,193 @@ rbTree<T>::rbTree()
 }
 
 template<typename T>
-rbTree<T>::~rbTree()
+rbTree<T>::rbTree(std::initializer_list<T> _il)
+	: rbTree()
 {
+	for (const T& item : _il)
+	{
+		pNode newNode = new node<T>(item);
+		insert(newNode);
+	}
 }
 
 template<typename T>
-void rbTree<T>::rbInsert(pNode _z)
+rbTree<T>::rbTree(std::vector<T>& _v)
+	: rbTree()
 {
-	pNode y = nil_;
+	for (const T& item : _v)
+	{
+		pNode newNode = new node<T>(item);
+		insert(newNode);
+	}
+}
+
+template<typename T>
+rbTree<T>::~rbTree()
+{
+	rbFree(root_);
+}
+
+template<typename T>
+void rbTree<T>::preOrderTreeWalk(pNode _x)
+{
+	/*Ç°Ðò±éÀú*/
+	if (_x != nil_)
+	{
+		std::cout << _x->key() << " ";
+		preOrderTreeWalk(_x->left());
+		preOrderTreeWalk(_x->right());
+	}
+}
+
+template<typename T>
+void rbTree<T>::inOrderTreeWalk(pNode _x)
+{
+	/*ÖÐÐò±éÀú*/
+	if (_x)
+	{
+		inOrderTreeWalk(_x->left());
+		std::cout << _x->key() << " ";
+		inOrderTreeWalk(_x->right());
+	}
+}
+
+template<typename T>
+void rbTree<T>::postOrderTreeWalk(pNode _x)
+{
+	/*ºóÐò±éÀú*/
+	if (_x)
+	{
+		postOrderTreeWalk(_x->left());
+		postOrderTreeWalk(_x->right());
+		std::cout << _x->key() << " ";
+	}
+}
+
+template<typename T>
+void rbTree<T>::print()
+{
+	inOrderTreeWalk(root_);
+	std::cout << std::endl;
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::treeSearch(pNode _x, T _key)
+{
+	/*²éÕÒ£¬ÓÃµÝ¹é*/
+	if (!_x || _key == _x->key())
+	{
+		return _x;
+	}
+	if (_key < _x->key())
+	{
+		return treeSearch(_x->left(), _key);
+	}
+	else
+	{
+		return treeSearch(_x->right(), _key);
+	}
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::iterativeTreeSearch(pNode _x, T _key)
+{
+	/*²éÕÒ£¬ÓÃÑ­»·´úÌæµÝ¹é£¬Ð§ÂÊ¸ß*/
+	while (_x && _key != _x->key())
+	{
+		if (_key < _x->key())
+		{
+			_x = _x->left();
+		}
+		else
+		{
+			_x = _x->right();
+		}
+	}
+	return _x;
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::search(T _key)
+{
+	return iterativeTreeSearch(root_, _key);
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::treeMinimum(pNode _x)
+{
+	/*±éÀúµ½×î×ó±ßµÄÒ»¸öµã*/
+	while (_x->left())
+	{
+		_x = _x->left();
+	}
+	return _x;
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::min()
+{
+	return treeMinimum(root_);
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::treeMaximum(pNode _x)
+{
+	/*±éÀúµ½×îÓÒ±ßµÄÒ»¸öµã*/
+	while (_x->right())
+	{
+		_x = _x->right();
+	}
+	return _x;
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::max()
+{
+	return treeMaximum(root_);
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::successor(pNode _x)
+{
+	/*µ±Ç°½ÚµãÓÐÓÒ×Ó½Úµã£¬ÑØ×ÅÓÒ±ßÕÒºó¼Ì*/
+	if (_x->right())
+	{
+		return treeMinimum(_x->right());
+	}
+	/*µ±Ç°½ÚµãÃ»ÓÐÓÒ×Ó½Úµã£¬ÑØ×Å¸¸½ÚµãµÄÓÒ±ßÏòÉÏÕÒºó¼Ì*/
+	pNode y = _x->parent();
+	while (y && _x == y->right())
+	{
+		_x = y;
+		y = y->parent();
+	}
+	return y;
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::preSuccessor(pNode _x)
+{
+	/*µ±Ç°½ÚµãÓÐ×ó×Ó½Úµã£¬ÑØ×Å×ó±ßÕÒÇ°Çý*/
+	if (_x->left())
+	{
+		return treeMaximum(_x->left());
+	}
+	pNode y = _x->parent();
+	while (y && _x == y->left())
+	{
+		_x = y;
+		y = y->parent();
+	}
+	return y;
+}
+
+template<typename T>
+void rbTree<T>::insert(pNode _z)
+{
+	pNode y = nullptr;
 	pNode x = root_;
-	// go through
-	while (x != nil_)
+	while (x)
 	{
 		y = x;
 		if (_z->key() < x->key())
@@ -35,9 +212,9 @@ void rbTree<T>::rbInsert(pNode _z)
 			x = x->right();
 		}
 	}
-	//_z->setParent(y);
+	_z->setParent(y);
 	// if no data in rbTree
-	if (y == nil_))
+	if (!y)
 	{
 		root_ = _z;
 	}
@@ -49,7 +226,7 @@ void rbTree<T>::rbInsert(pNode _z)
 	{
 		y->setRight(_z);
 	}
-	_z->setParent(y);
+	//_z->setParent(y);
 	_z->setLeft(nil_);
 	_z->setRight(nil_);
 	_z->setColor(RED);
@@ -57,17 +234,17 @@ void rbTree<T>::rbInsert(pNode _z)
 }
 
 template<typename T>
-void rbTree<T>::rbDelete(pNode _z)
+void rbTree<T>::remove(pNode _z)
 {
 	pNode y = _z;
 	pNode x = nullptr;
-	node<T>::iro yOriginColor = y->color();
-	if (_z->left() == nil_)
+	COLOR yOriginColor = y->color();
+	if (!_z->left())
 	{
 		x = _z->right();
 		rbTransplant(_z, _z->right());
 	}
-	else if (_z->right() == nil_)
+	else if (!_z->right())
 	{
 		x = _z->left();
 		rbTransplant(_z, _z->left());
@@ -84,7 +261,7 @@ void rbTree<T>::rbDelete(pNode _z)
 		else
 		{
 			rbTransplant(y, y->right());
-			y->setRight(_z->right);
+			y->setRight(_z->right());
 			y->right()->setParent(y);
 		}
 		rbTransplant(_z, y);
@@ -106,7 +283,7 @@ void rbTree<T>::leftRotate(pNode _x)
 	_x->setRight(y->left());
 
 	/*set parent of y's left node*/
-	if (y->left()->color() != NIL)
+	if (y->left())
 	{
 		y->left()->setParent(_x);
 	}
@@ -115,11 +292,11 @@ void rbTree<T>::leftRotate(pNode _x)
 	y->setParent(_x->parent());
 	
 	/*set _x's parent left or right node*/
-	if (_x->parent()->color() == NIL)
+	if (!_x->parent())
 	{
 		root_ = y;
 	}
-	else if (_x == _x->pareant()->left())
+	else if (_x == _x->parent()->left())
 	{
 		_x->parent()->setLeft(y);
 	}
@@ -140,7 +317,7 @@ void rbTree<T>::rightRotate(pNode _y)
 	_y->setLeft(x->right());
 
 	/*set parent node of x's right node */
-	if (x->right()->color() != NIL)
+	if (x->right())
 	{
 		x->right()->setParent(_y);
 	}
@@ -149,7 +326,7 @@ void rbTree<T>::rightRotate(pNode _y)
 	x->setParent(_y->parent());
 	
 	/*set _y's parent left or right node*/
-	if (_y->parent()->color() == NIL)
+	if (!_y->parent())
 	{
 		root_ = x;
 	}
@@ -171,12 +348,12 @@ void rbTree<T>::rbInsertFixup(pNode _z)
 {
 	while (_z->parent()->color() == RED)
 	{
-		/*å¦‚æžœè¯¥èŠ‚ç‚¹åœ¨ä¸€ä¸ªå­æ ‘çš„å·¦æž*/
+		/*Èç¹û¸Ã½ÚµãÔÚÒ»¸ö×ÓÊ÷µÄ×óÖ¦*/
 		if (_z->parent() == _z->parent()->parent()->left())
 		{
-			/*å–å¾—å”èŠ‚ç‚¹*/
+			/*È¡µÃÊå½Úµã*/
 			pNode y = _z->parent()->parent()->right();
-			/*case 1: _zå’Œçˆ¶èŠ‚ç‚¹éƒ½æ˜¯çº¢è‰²ï¼Œå”èŠ‚ç‚¹ä¹Ÿæ˜¯çº¢è‰²*/
+			/*case 1: _zºÍ¸¸½Úµã¶¼ÊÇºìÉ«£¬Êå½ÚµãÒ²ÊÇºìÉ«*/
 			if (y->color() == RED)
 			{
 				_z->parent()->setColor(BLACK);
@@ -184,18 +361,18 @@ void rbTree<T>::rbInsertFixup(pNode _z)
 				_z->parent()->parent()->setColor(RED);
 				_z = _z->parent()->parent();
 			}
-			/*case 2ï¼š_zå’Œçˆ¶èŠ‚ç‚¹éƒ½æ˜¯çº¢è‰²ï¼Œå”èŠ‚ç‚¹æ˜¯é»‘è‰²ï¼Œ_zä¸ºå³å­©å­*/
+			/*case 2£º_zºÍ¸¸½Úµã¶¼ÊÇºìÉ«£¬Êå½ÚµãÊÇºÚÉ«£¬_zÎªÓÒº¢×Ó*/
 			else if (_z == _z->parent()->right())
 			{
 				_z = _z->parent();
 				leftRotate(_z);
 			}
-			/*case 3ï¼š_zå’Œçˆ¶èŠ‚ç‚¹éƒ½æ˜¯çº¢è‰²ï¼Œå”èŠ‚ç‚¹æ˜¯é»‘è‰²ï¼Œ_zä¸ºå·¦å­©å­*/
+			/*case 3£º_zºÍ¸¸½Úµã¶¼ÊÇºìÉ«£¬Êå½ÚµãÊÇºÚÉ«£¬_zÎª×óº¢×Ó*/
 			_z->parent()->setColor(BLACK);
 			_z->parent()->parent()->setColor(RED);
 			rightRotate(_z);
 		}
-		/*å¦‚æžœè¯¥èŠ‚ç‚¹åœ¨ä¸€ä¸ªå­æ ‘çš„å³æž*/
+		/*Èç¹û¸Ã½ÚµãÔÚÒ»¸ö×ÓÊ÷µÄÓÒÖ¦*/
 		else
 		{
 			pNode y = _z->parent()->parent()->left();
@@ -269,7 +446,7 @@ void rbTree<T>::rbDeleteFixup(pNode _x)
 			}
 			w->setColor(_x->parent()->color());
 			_x->parent()->setColor(BLACK);
-			W->right()->setColor(BLACK);
+			w->right()->setColor(BLACK);
 			leftRotate(_x->parent());
 			_x = root_;
 		}
@@ -297,10 +474,27 @@ void rbTree<T>::rbDeleteFixup(pNode _x)
 			}
 			w->setColor(_x->parent()->color());
 			_x->parent()->setColor(BLACK);
-			W->left()->setColor(BLACK);
+			w->left()->setColor(BLACK);
 			rightRotate(_x->parent());
 			_x = root_;
 		}
 	}
 	_x->setColor(BLACK);
 }
+
+template<typename T>
+void rbTree<T>::rbFree(pNode _x)
+{
+	if (_x)
+	{
+		rbFree(_x->left());
+		rbFree(_x->right());
+		delete _x;
+		_x = nullptr;
+		return;
+	}
+}
+
+
+template class rbTree<int>;
+template class rbTree<std::string>;
