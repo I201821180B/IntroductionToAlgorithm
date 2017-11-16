@@ -1,6 +1,8 @@
 #ifndef _BASIC_H_
 #define _BASIC_H_
 
+
+/*检测内存泄漏*/
 #define CHECK_MEMORY_LEAKS
 
 #ifdef CHECK_MEMORY_LEAKS
@@ -10,6 +12,18 @@
 #define CHECK_MEMORY_LEAKS_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define new CHECK_MEMORY_LEAKS_NEW
 #endif
+
+/**
+ * 禁止类的拷贝，
+ * node和binaryTree中都有指针，需要深拷贝，实在没必要
+ */
+#define DISABLE_COPY_AND_ASSIGN(className) \
+private: \
+	className(const className&); \
+	className& operator=(const className&)
+
+
+
 
 #endif
 

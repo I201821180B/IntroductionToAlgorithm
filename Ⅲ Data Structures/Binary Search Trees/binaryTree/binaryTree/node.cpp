@@ -23,7 +23,19 @@ template<typename T>
 node<T>::node(T _key)
 	: key_(_key), left_(nullptr), right_(nullptr), parent_(nullptr)
 {
+	std::cout << "node constructor" << std::endl;
 }
+
+//template<typename T>
+//node<T>::node(const node<T>& _node)
+//{
+//	key_ = _node.key();
+//	left_ = _node.left();
+//	right_ = _node.right();
+//	parent_ = _node.parent();
+//	std::cout << "node copy constructor" << std::endl;
+//
+//}
 
 template<typename T>
 void node<T>::setKey(T _key)

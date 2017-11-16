@@ -13,25 +13,25 @@ binaryTree<T>::binaryTree()
 }
 
 template<typename T>
-binaryTree<T>::binaryTree(std::initializer_list<T> il)
+binaryTree<T>::binaryTree(std::initializer_list<T> _il)
 	: binaryTree()
 {
-	for (const T& item : il)
+	for (const T& item : _il)
 	{
 		pNode newNode = new node<T>(item);
-		treeInsert(newNode);
+		insert(newNode);
 	}
 }
 
 template<typename T>
-binaryTree<T>::binaryTree(std::vector<T>& v)
+binaryTree<T>::binaryTree(std::vector<T>& _v)
 	: binaryTree()
 {
-	for (const T& item : v)
+	for (const T& item : _v)
 	{
 		//std::cout << item << std::endl;
 		pNode newNode = new node<T>(item);
-		treeInsert(newNode);
+		insert(newNode);
 	}
 }
 
@@ -43,21 +43,45 @@ binaryTree<T>::~binaryTree()
 }
 
 template<typename T>
-void binaryTree<T>::inorderTreeWalk(pNode _x)
+void binaryTree<T>::preOrderTreeWalk(pNode _x)
+{
+	/*前序遍历*/
+	if (_x)
+	{
+		std::cout << _x->key() << " ";
+		preOrderTreeWalk(_x->left());
+		preOrderTreeWalk(_x->right());
+	}
+}
+
+template<typename T>
+void binaryTree<T>::inOrderTreeWalk(pNode _x)
 {
 	/*中序遍历*/
 	if (_x)
 	{
-		inorderTreeWalk(_x->left());
+		inOrderTreeWalk(_x->left());
 		std::cout << _x->key() << " ";
-		inorderTreeWalk(_x->right());
+		inOrderTreeWalk(_x->right());
+	}
+}
+
+template<typename T>
+void binaryTree<T>::postOrderTreeWalk(pNode _x)
+{
+	/*后序遍历*/
+	if (_x)
+	{
+		postOrderTreeWalk(_x->left());
+		postOrderTreeWalk(_x->right());
+		std::cout << _x->key() << " ";
 	}
 }
 
 template<typename T>
 void binaryTree<T>::print()
 {
-	inorderTreeWalk(root_);
+	inOrderTreeWalk(root_);
 	std::cout << std::endl;
 }
 
@@ -145,7 +169,7 @@ typename binaryTree<T>::pNode binaryTree<T>::max()
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::treeSuccessor(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::successor(pNode _x)
 {
 	/*当前节点有右子节点，沿着右边找后继*/
 	if (_x->right())
@@ -163,7 +187,24 @@ typename binaryTree<T>::pNode binaryTree<T>::treeSuccessor(pNode _x)
 }
 
 template<typename T>
-void binaryTree<T>::treeInsert(pNode _z)
+typename binaryTree<T>::pNode binaryTree<T>::preSuccessor(pNode _x)
+{
+	/*当前节点有左子节点，沿着左边找前驱*/
+	if (_x->left())
+	{
+		return treeMaximum(_x->left());
+	}
+	pNode y = _x->parent();
+	while (y && _x == y->left())
+	{
+		_x = y;
+		y = y->parent();
+	}
+	return y;
+}
+
+template<typename T>
+void binaryTree<T>::insert(pNode _z)
 {
 	pNode y = nullptr;
 	pNode x = root_;
@@ -217,7 +258,7 @@ void binaryTree<T>::transplant(pNode _u, pNode _v)
 }
 
 template<typename T>
-void binaryTree<T>::treeDelete(pNode _z)
+void binaryTree<T>::remove(pNode _z)
 {
 	if (!(_z->left()))
 	{

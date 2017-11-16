@@ -4,6 +4,7 @@
 #include "basic.h"
 
 #include <string>
+#include <iostream>
 //#include <memory>
 
 //using std::shared_ptr;
@@ -15,6 +16,7 @@ public:
 	using pNode = node<T>*;
 	//static enum iro { RED, BLACK, NIL };
 	explicit node(T _key);
+	//node(const node<T>& _node);
 	//explicit node(iro _color);
 	//~node();
 	//iro color() { return color_; }
@@ -33,6 +35,7 @@ private:
 	pNode left_;
 	pNode right_;
 	pNode parent_;
+	DISABLE_COPY_AND_ASSIGN(node);
 };
 
 #endif
