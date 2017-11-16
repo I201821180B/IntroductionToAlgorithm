@@ -3,9 +3,9 @@
 
 template<typename T>
 rbTree<T>::rbTree()
-	: /*nil_(nullptr), */root_(nullptr)
 {
 	nil_ = new node<T>(BLACK);
+	root_ = nil_;
 	//root_ = nil_;
 	/*root_ = new node<T>(BLACK);
 	root_->setParent(nil_);
@@ -57,7 +57,7 @@ template<typename T>
 void rbTree<T>::inOrderTreeWalk(pNode _x)
 {
 	/*中序遍历*/
-	if (_x)
+	if (_x != nil_)
 	{
 		inOrderTreeWalk(_x->left());
 		std::cout << _x->key() << " ";
@@ -69,7 +69,7 @@ template<typename T>
 void rbTree<T>::postOrderTreeWalk(pNode _x)
 {
 	/*后序遍历*/
-	if (_x)
+	if (_x != nil_)
 	{
 		postOrderTreeWalk(_x->left());
 		postOrderTreeWalk(_x->right());
@@ -88,7 +88,7 @@ template<typename T>
 typename rbTree<T>::pNode rbTree<T>::treeSearch(pNode _x, T _key)
 {
 	/*查找，用递归*/
-	if (!_x || _key == _x->key())
+	if (_x == nil_ || _key == _x->key())
 	{
 		return _x;
 	}
@@ -106,7 +106,7 @@ template<typename T>
 typename rbTree<T>::pNode rbTree<T>::iterativeTreeSearch(pNode _x, T _key)
 {
 	/*查找，用循环代替递归，效率高*/
-	while (_x && _key != _x->key())
+	while (_x != nil_ && _key != _x->key())
 	{
 		if (_key < _x->key())
 		{
@@ -130,7 +130,7 @@ template<typename T>
 typename rbTree<T>::pNode rbTree<T>::treeMinimum(pNode _x)
 {
 	/*遍历到最左边的一个点*/
-	while (_x->left())
+	while (_x->left() != nil_)
 	{
 		_x = _x->left();
 	}
@@ -147,7 +147,7 @@ template<typename T>
 typename rbTree<T>::pNode rbTree<T>::treeMaximum(pNode _x)
 {
 	/*遍历到最右边的一个点*/
-	while (_x->right())
+	while (_x->right() != nil_)
 	{
 		_x = _x->right();
 	}
@@ -164,13 +164,13 @@ template<typename T>
 typename rbTree<T>::pNode rbTree<T>::successor(pNode _x)
 {
 	/*当前节点有右子节点，沿着右边找后继*/
-	if (_x->right())
+	if (_x->right() != nil_)
 	{
 		return treeMinimum(_x->right());
 	}
 	/*当前节点没有右子节点，沿着父节点的右边向上找后继*/
 	pNode y = _x->parent();
-	while (y && _x == y->right())
+	while (y != nil_ && _x == y->right())
 	{
 		_x = y;
 		y = y->parent();
@@ -182,12 +182,12 @@ template<typename T>
 typename rbTree<T>::pNode rbTree<T>::preSuccessor(pNode _x)
 {
 	/*当前节点有左子节点，沿着左边找前驱*/
-	if (_x->left())
+	if (_x->left() != nil_)
 	{
 		return treeMaximum(_x->left());
 	}
 	pNode y = _x->parent();
-	while (y && _x == y->left())
+	while (y != nil_ && _x == y->left())
 	{
 		_x = y;
 		y = y->parent();
@@ -198,9 +198,9 @@ typename rbTree<T>::pNode rbTree<T>::preSuccessor(pNode _x)
 template<typename T>
 void rbTree<T>::insert(pNode _z)
 {
-	pNode y = nullptr;
+	pNode y = nil_;
 	pNode x = root_;
-	while (x)
+	while (x != nil_)
 	{
 		y = x;
 		if (_z->key() < x->key())
@@ -214,7 +214,7 @@ void rbTree<T>::insert(pNode _z)
 	}
 	_z->setParent(y);
 	// if no data in rbTree
-	if (!y)
+	if (y == nil_)
 	{
 		root_ = _z;
 	}
@@ -237,14 +237,14 @@ template<typename T>
 void rbTree<T>::remove(pNode _z)
 {
 	pNode y = _z;
-	pNode x = nullptr;
+	pNode x = nil_;
 	COLOR yOriginColor = y->color();
-	if (!_z->left())
+	if (_z->left() == nil_)
 	{
 		x = _z->right();
 		rbTransplant(_z, _z->right());
 	}
-	else if (!_z->right())
+	else if (_z->right() == nil_)
 	{
 		x = _z->left();
 		rbTransplant(_z, _z->left());
@@ -279,11 +279,11 @@ template<typename T>
 void rbTree<T>::leftRotate(pNode _x)
 {
 	/*set right node of _x*/
-	pNode y(_x->right());
+	pNode y = _x->right();
 	_x->setRight(y->left());
 
 	/*set parent of y's left node*/
-	if (y->left())
+	if (y->left() != nil)
 	{
 		y->left()->setParent(_x);
 	}
@@ -292,7 +292,7 @@ void rbTree<T>::leftRotate(pNode _x)
 	y->setParent(_x->parent());
 	
 	/*set _x's parent left or right node*/
-	if (!_x->parent())
+	if (_x->parent() == nil_)
 	{
 		root_ = y;
 	}
@@ -313,11 +313,11 @@ template<typename T>
 void rbTree<T>::rightRotate(pNode _y)
 {
 	/*set left node of _y*/
-	pNode x(_y->left());
+	pNode x = _y->left();
 	_y->setLeft(x->right());
 
 	/*set parent node of x's right node */
-	if (x->right())
+	if (x->right() != nil_)
 	{
 		x->right()->setParent(_y);
 	}
@@ -326,7 +326,7 @@ void rbTree<T>::rightRotate(pNode _y)
 	x->setParent(_y->parent());
 	
 	/*set _y's parent left or right node*/
-	if (!_y->parent())
+	if (_y->parent() == nil_)
 	{
 		root_ = x;
 	}
