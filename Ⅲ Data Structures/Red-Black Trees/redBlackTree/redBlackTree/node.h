@@ -19,7 +19,7 @@ public:
 	node();
 	//node(COLOR _color, T _key);
 	explicit node(COLOR _color);
-	//explicit node(T _key);
+	explicit node(T _key);
 	node(T _key, pNode _nil);
 	//node(COLOR _color, pNode _nil);
 	//~node();

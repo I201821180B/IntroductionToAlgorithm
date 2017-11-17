@@ -35,24 +35,31 @@ public:
 	void postOrderTreeWalk(pNode _x);
 	void print();
 
-	pNode treeSearch(pNode _x, T _key);
-	pNode iterativeTreeSearch(pNode _x, T _key);
-	pNode search(T _key);
+	
+	T search(T _key);
 
-	pNode treeMinimum(pNode _x);
-	pNode min();
-	pNode treeMaximum(pNode _x);
-	pNode max();
+	T min();
+	T max();
 
-	pNode successor(pNode _x);
-	pNode preSuccessor(pNode _x);
-
-	void insert(pNode _z);
-	void remove(pNode _z);
+	T successor(T _key);
+	T preSuccessor(T _key);
+	
+	void insert(T _key);
+	void remove(T _key);
 
 private:
 	pNode root_;
 	pNode nil_;
+
+	pNode treeMaximum(pNode _x);
+	pNode treeMinimum(pNode _x);
+	pNode treeSearch(pNode _x, T _key);
+	pNode iterativeTreeSearch(pNode _x, T _key);
+	pNode rbSuccessor(pNode _x);
+	pNode rbPreSuccessor(pNode _x);
+	void rbInsert(pNode _z);
+	void rbDelete(pNode _z);
+
 	void leftRotate(pNode _x);
 	void rightRotate(pNode _y);
 	void rbInsertFixup(pNode _z);

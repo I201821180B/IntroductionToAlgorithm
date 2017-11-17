@@ -22,8 +22,9 @@ rbTree<T>::rbTree(std::initializer_list<T> _il)
 {
 	for (const T& item : _il)
 	{
-		pNode newNode = new node<T>(item, nil_);
-		insert(newNode);
+		//pNode newNode = new node<T>(item);//, nil_
+		//rbInsert(newNode);
+		insert(item);
 	}
 }
 
@@ -33,8 +34,9 @@ rbTree<T>::rbTree(std::vector<T>& _v)
 {
 	for (const T& item : _v)
 	{
-		pNode newNode = new node<T>(item, nil_);
-		insert(newNode);
+		//pNode newNode = new node<T>(item);//, nil_
+		//rbInsert(newNode);
+		insert(item);
 	}
 }
 
@@ -125,9 +127,10 @@ typename rbTree<T>::pNode rbTree<T>::iterativeTreeSearch(pNode _x, T _key)
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::search(T _key)
+T rbTree<T>::search(T _key)
 {
-	return iterativeTreeSearch(root_, _key);
+	pNode res = iterativeTreeSearch(root_, _key);
+	return res->key();
 }
 
 template<typename T>
@@ -142,9 +145,10 @@ typename rbTree<T>::pNode rbTree<T>::treeMinimum(pNode _x)
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::min()
+T rbTree<T>::min()
 {
-	return treeMinimum(root_);
+	pNode res = treeMinimum(root_);
+	return res->key();
 }
 
 template<typename T>
@@ -159,13 +163,30 @@ typename rbTree<T>::pNode rbTree<T>::treeMaximum(pNode _x)
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::max()
+T rbTree<T>::max()
 {
-	return treeMaximum(root_);
+	pNode res = treeMaximum(root_);
+	return res->key();
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::successor(pNode _x)
+T rbTree<T>::successor(T _key)
+{
+	pNode res = iterativeTreeSearch(root_, _key);
+	pNode suc = rbSuccessor(res);
+	return suc->key();
+}
+
+template<typename T>
+T rbTree<T>::preSuccessor(T _key)
+{
+	pNode res = iterativeTreeSearch(root_, _key);
+	pNode preSuc = rbPreSuccessor(res);
+	return preSuc->key();
+}
+
+template<typename T>
+typename rbTree<T>::pNode rbTree<T>::rbSuccessor(pNode _x)
 {
 	/*当前节点有右子节点，沿着右边找后继*/
 	if (_x->right() != nil_)
@@ -183,7 +204,7 @@ typename rbTree<T>::pNode rbTree<T>::successor(pNode _x)
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::preSuccessor(pNode _x)
+typename rbTree<T>::pNode rbTree<T>::rbPreSuccessor(pNode _x)
 {
 	/*当前节点有左子节点，沿着左边找前驱*/
 	if (_x->left() != nil_)
@@ -200,7 +221,7 @@ typename rbTree<T>::pNode rbTree<T>::preSuccessor(pNode _x)
 }
 
 template<typename T>
-void rbTree<T>::insert(pNode _z)
+void rbTree<T>::rbInsert(pNode _z)
 {
 	pNode y = nil_;
 	pNode x = root_;
@@ -238,7 +259,14 @@ void rbTree<T>::insert(pNode _z)
 }
 
 template<typename T>
-void rbTree<T>::remove(pNode _z)
+void rbTree<T>::insert(T _key)
+{
+	pNode newNode = new node<T>(_key);
+	rbInsert(newNode);
+}
+
+template<typename T>
+void rbTree<T>::rbDelete(pNode _z)
 {
 	pNode y = _z;
 	pNode x = nil_;
@@ -277,6 +305,14 @@ void rbTree<T>::remove(pNode _z)
 	{
 		rbDeleteFixup(x);
 	}
+	delete _z;
+}
+
+template<typename T>
+void rbTree<T>::remove(T _key)
+{
+	pNode res = iterativeTreeSearch(root_, _key);
+	rbDelete(res);
 }
 
 template<typename T>

@@ -17,16 +17,20 @@ int main()
 	prb->print();
 
 	int key = 32;
-	auto res = prb->search(key);
-	std::cout << "tree search " << key << ", result: " << res->key() << std::endl;
+	int res = prb->search(key);
+	std::cout << "tree search " << key << ", result: " << res << std::endl;
 
-	std::cout << "tree min: " << prb->min()->key() << ", tree max: " << prb->max()->key() << std::endl;
+	std::cout << "tree min: " << prb->min() << ", tree max: " << prb->max() << std::endl;
 
-	auto res1 = prb->successor(res);
-	std::cout << "tree Successor: " << key << "'s successor is " << res1->key() << std::endl;
+	int suc = prb->successor(res);
+	std::cout << "tree Successor: " << key << "'s successor is " << suc << std::endl;
 
-	auto res2 = prb->preSuccessor(res);
-	std::cout << "tree preSuccessor: " << key << "'s presuccessor is " << res2->key() << std::endl;
+	int preSuc = prb->preSuccessor(res);
+	std::cout << "tree preSuccessor: " << key << "'s presuccessor is " << preSuc << std::endl;
 
+	prb->insert(78);
+	prb->print();
+	prb->remove(65);
+	prb->print();
 	delete prb;
 }

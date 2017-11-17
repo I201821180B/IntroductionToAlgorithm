@@ -13,15 +13,15 @@ node<T>::node(COLOR _color)
 {
 	color_ = _color;
 }
-//
-//template<typename T>
-//node<T>::node(T _key)
-//	: node()/*, key_(_key)*/
-//{
-//	key_ = _key;
-//	//color_ = RED;
-//	std::cout << "node constructor" << std::endl;
-//}
+
+template<typename T>
+node<T>::node(T _key)
+	: node()/*, key_(_key)*/
+{
+	key_ = _key;
+	//color_ = RED;
+	std::cout << "node constructor" << std::endl;
+}
 
 /*不能调用委托构造函数之后，再初始化别的变量*/
 //template<typename T>
