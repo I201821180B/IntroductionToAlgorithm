@@ -27,6 +27,21 @@ node<T>::node(T _key)
 }
 
 //template<typename T>
+//node<T>::~node()
+//{
+//	//if (std::is_pointer<T>::value)
+//	//{
+//		//delete key_;
+//		
+//		std::unique_ptr<
+//			typename std::enable_if<
+//				std::is_pointer<T>::value, typename std::remove_pointer<T>::type
+//			>::type
+//		> upkey(key_);
+//	//}
+//}
+
+//template<typename T>
 //node<T>::node(const node<T>& _node)
 //{
 //	key_ = _node.key();
@@ -60,6 +75,7 @@ void node<T>::setParent(pNode _newparent)
 {
 	this->parent_ = _newparent;
 }
+
 
 
 template class node<int>;

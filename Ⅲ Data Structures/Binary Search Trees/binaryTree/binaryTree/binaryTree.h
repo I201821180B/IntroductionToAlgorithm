@@ -4,8 +4,8 @@
 #include "basic.h"
 #include "node.h"
 
-#include <initializer_list>
 #include <iostream>
+#include <initializer_list>
 #include <string>
 #include <vector>
 
