@@ -22,17 +22,21 @@ int main()
 	pbt->print();
 	
 	int key = 32;
-	auto res = pbt->search(key);
-	std::cout << "tree search " << key << ", result: " << res->key() << std::endl;
+	int res = pbt->search(key);
+	std::cout << "tree search " << key << ", result: " << res << std::endl;
 
-	std::cout << "tree min: " << pbt->min()->key() << ", tree max: " << pbt->max()->key() << std::endl;
+	std::cout << "tree min: " << pbt->min() << ", tree max: " << pbt->max() << std::endl;
 
-	auto res1 = pbt->successor(res);
-	std::cout << "tree Successor: " << key << "'s successor is " << res1->key() << std::endl;
+	int res1 = pbt->successor(res);
+	std::cout << "tree Successor: " << key << "'s successor is " << res1 << std::endl;
 
-	auto res2 = pbt->preSuccessor(res);
-	std::cout << "tree preSuccessor: " << key << "'s presuccessor is " << res2->key() << std::endl;
+	int res2 = pbt->preSuccessor(res);
+	std::cout << "tree preSuccessor: " << key << "'s presuccessor is " << res2 << std::endl;
 
+	pbt->insert(54);
+	pbt->print();
+	pbt->remove(65);
+	pbt->print();
 	delete pbt;
 	//_CrtDumpMemoryLeaks(); // 不要使用这个函数，有误报
 

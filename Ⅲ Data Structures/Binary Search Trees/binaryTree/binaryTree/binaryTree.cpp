@@ -18,8 +18,9 @@ binaryTree<T>::binaryTree(std::initializer_list<T> _il)
 {
 	for (const T& item : _il)
 	{
-		pNode newNode = new node<T>(item);
-		insert(newNode);
+		/*pNode newNode = new node<T>(item);
+		treeInsert(newNode);*/
+		insert(item);
 	}
 }
 
@@ -30,8 +31,9 @@ binaryTree<T>::binaryTree(std::vector<T>& _v)
 	for (const T& item : _v)
 	{
 		//std::cout << item << std::endl;
-		pNode newNode = new node<T>(item);
-		insert(newNode);
+		/*pNode newNode = new node<T>(item);
+		treeInsert(newNode);*/
+		insert(item);
 	}
 }
 
@@ -39,7 +41,6 @@ template<typename T>
 binaryTree<T>::~binaryTree()
 {
 	treeFree(root_);
-	//_CrtDumpMemoryLeaks();
 }
 
 template<typename T>
@@ -128,10 +129,10 @@ typename binaryTree<T>::pNode binaryTree<T>::iterativeTreeSearch(pNode _x, T _ke
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::search(T _key)
+T binaryTree<T>::search(T _key)
 {
-	
-	return iterativeTreeSearch(root_, _key);
+	pNode res = iterativeTreeSearch(root_, _key);
+	return res->key();
 }
 
 template<typename T>
@@ -146,9 +147,10 @@ typename binaryTree<T>::pNode binaryTree<T>::treeMinimum(pNode _x)
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::min()
+T binaryTree<T>::min()
 {
-	return treeMinimum(root_);
+	pNode res = treeMinimum(root_);
+	return res->key();
 }
 
 template<typename T>
@@ -163,13 +165,14 @@ typename binaryTree<T>::pNode binaryTree<T>::treeMaximum(pNode _x)
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::max()
+T binaryTree<T>::max()
 {
-	return treeMaximum(root_);
+	pNode res = treeMaximum(root_);
+	return res->key();
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::successor(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::treeSuccessor(pNode _x)
 {
 	/*当前节点有右子节点，沿着右边找后继*/
 	if (_x->right())
@@ -187,7 +190,7 @@ typename binaryTree<T>::pNode binaryTree<T>::successor(pNode _x)
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::preSuccessor(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::treePreSuccessor(pNode _x)
 {
 	/*当前节点有左子节点，沿着左边找前驱*/
 	if (_x->left())
@@ -204,7 +207,23 @@ typename binaryTree<T>::pNode binaryTree<T>::preSuccessor(pNode _x)
 }
 
 template<typename T>
-void binaryTree<T>::insert(pNode _z)
+T binaryTree<T>::successor(T _key)
+{
+	pNode res = iterativeTreeSearch(root_, _key);
+	pNode suc = treeSuccessor(res);
+	return suc->key();
+}
+
+template<typename T>
+T binaryTree<T>::preSuccessor(T _key)
+{
+	pNode res = iterativeTreeSearch(root_, _key);
+	pNode suc = treePreSuccessor(res);
+	return suc->key();
+}
+
+template<typename T>
+void binaryTree<T>::treeInsert(pNode _z)
 {
 	pNode y = nullptr;
 	pNode x = root_;
@@ -258,7 +277,7 @@ void binaryTree<T>::transplant(pNode _u, pNode _v)
 }
 
 template<typename T>
-void binaryTree<T>::remove(pNode _z)
+void binaryTree<T>::treeDelete(pNode _z)
 {
 	if (!(_z->left()))
 	{
@@ -282,6 +301,21 @@ void binaryTree<T>::remove(pNode _z)
 		y->setLeft(_z->left());
 		y->left()->setParent(y);
 	}
+	delete _z;
+}
+
+template<typename T>
+void binaryTree<T>::insert(T _key)
+{
+	pNode newNode = new node<T>(_key);
+	treeInsert(newNode);
+}
+
+template<typename T>
+void binaryTree<T>::remove(T _key)
+{
+	pNode res = iterativeTreeSearch(root_, _key);
+	treeDelete(res);
 }
 
 template<typename T>
