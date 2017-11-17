@@ -23,26 +23,24 @@ node<T>::node(T _key)
 	std::cout << "node constructor" << std::endl;
 }
 
-/*不能调用委托构造函数之后，再初始化别的变量*/
 //template<typename T>
-//node<T>::node(COLOR _color, T _key)
-//	: node()/*, color_(_color), key_(_key)*/
+//node<T>::~node()
 //{
-//	color_ = _color;
-//	key_ = _key;
+//	if (std::is_pointer<T>::value)
+//	{
+//		delete key_;
+//	}
 //}
 
+/*不能调用委托构造函数之后，再初始化别的变量*/
 template<typename T>
-node<T>::node(T _key, pNode _nil)
-	: key_(_key), left_(_nil), right_(_nil), parent_(_nil)
+node<T>::node(COLOR _color, T _key)
+	: node()/*, color_(_color), key_(_key)*/
 {
+	color_ = _color;
+	key_ = _key;
 }
 
-//template<typename T>
-//node<T>::node(COLOR _color, pNode _nil)
-//	: color_(_color), left_(_nil), right_(_nil), parent_(_nil)
-//{
-//}
 
 template<typename T>
 void node<T>::setColor(COLOR _color)

@@ -9,11 +9,6 @@ rbTree<T>::rbTree()
 	nil_->setLeft(nil_);
 	nil_->setRight(nil_);
 	root_ = nil_;
-	//root_ = nil_;
-	/*root_ = new node<T>(BLACK);
-	root_->setParent(nil_);
-	root_->setLeft(nil_);
-	root_->setRight(nil_);*/
 }
 
 template<typename T>
@@ -22,8 +17,6 @@ rbTree<T>::rbTree(std::initializer_list<T> _il)
 {
 	for (const T& item : _il)
 	{
-		//pNode newNode = new node<T>(item);//, nil_
-		//rbInsert(newNode);
 		insert(item);
 	}
 }
@@ -34,8 +27,6 @@ rbTree<T>::rbTree(std::vector<T>& _v)
 {
 	for (const T& item : _v)
 	{
-		//pNode newNode = new node<T>(item);//, nil_
-		//rbInsert(newNode);
 		insert(item);
 	}
 }
