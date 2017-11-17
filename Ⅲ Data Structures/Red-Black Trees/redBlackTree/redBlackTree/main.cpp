@@ -9,10 +9,10 @@ int main()
 	/*只用加这一句就可以检测内存泄露了*/
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	rbTree<int> rb{ 4, 1, 3, 2, 7, 5, 6, 9 };
+	rbTree<int> rb{ 4, 1, 3, 2, 7, 5, 6, 9 };//
 	rb.print();
 
-	std::vector<int> v1{ 46,143,25,32,15,65,57 };
+	std::vector<int> v1{ 46,143,25,32,15,65,57,67,120,23,45 };
 	rbTree<int>* prb = new rbTree<int>(v1);
 	prb->print();
 

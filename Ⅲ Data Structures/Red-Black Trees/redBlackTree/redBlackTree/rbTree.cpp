@@ -5,6 +5,9 @@ template<typename T>
 rbTree<T>::rbTree()
 {
 	nil_ = new node<T>(BLACK);
+	nil_->setParent(nil_);
+	nil_->setLeft(nil_);
+	nil_->setRight(nil_);
 	root_ = nil_;
 	//root_ = nil_;
 	/*root_ = new node<T>(BLACK);
@@ -19,7 +22,7 @@ rbTree<T>::rbTree(std::initializer_list<T> _il)
 {
 	for (const T& item : _il)
 	{
-		pNode newNode = new node<T>(item);
+		pNode newNode = new node<T>(item, nil_);
 		insert(newNode);
 	}
 }
@@ -30,7 +33,7 @@ rbTree<T>::rbTree(std::vector<T>& _v)
 {
 	for (const T& item : _v)
 	{
-		pNode newNode = new node<T>(item);
+		pNode newNode = new node<T>(item, nil_);
 		insert(newNode);
 	}
 }
@@ -39,6 +42,7 @@ template<typename T>
 rbTree<T>::~rbTree()
 {
 	rbFree(root_);
+	delete nil_;
 }
 
 template<typename T>
@@ -283,14 +287,14 @@ void rbTree<T>::leftRotate(pNode _x)
 	_x->setRight(y->left());
 
 	/*set parent of y's left node*/
-	if (y->left() != nil)
+	if (y->left() != nil_)
 	{
 		y->left()->setParent(_x);
 	}
 
 	/*set parent node of y*/
 	y->setParent(_x->parent());
-	
+
 	/*set _x's parent left or right node*/
 	if (_x->parent() == nil_)
 	{
@@ -324,7 +328,7 @@ void rbTree<T>::rightRotate(pNode _y)
 
 	/*set parent node of x*/
 	x->setParent(_y->parent());
-	
+
 	/*set _y's parent left or right node*/
 	if (_y->parent() == nil_)
 	{
@@ -361,16 +365,19 @@ void rbTree<T>::rbInsertFixup(pNode _z)
 				_z->parent()->parent()->setColor(RED);
 				_z = _z->parent()->parent();
 			}
-			/*case 2：_z和父节点都是红色，叔节点是黑色，_z为右孩子*/
-			else if (_z == _z->parent()->right())
+			else
 			{
-				_z = _z->parent();
-				leftRotate(_z);
+				/*case 2：_z和父节点都是红色，叔节点是黑色，_z为右孩子*/
+				if (_z == _z->parent()->right())
+				{
+					_z = _z->parent();
+					leftRotate(_z);
+				}
+				/*case 3：_z和父节点都是红色，叔节点是黑色，_z为左孩子*/
+				_z->parent()->setColor(BLACK);
+				_z->parent()->parent()->setColor(RED);
+				rightRotate(_z->parent()->parent());//
 			}
-			/*case 3：_z和父节点都是红色，叔节点是黑色，_z为左孩子*/
-			_z->parent()->setColor(BLACK);
-			_z->parent()->parent()->setColor(RED);
-			rightRotate(_z);
 		}
 		/*如果该节点在一个子树的右枝*/
 		else
@@ -384,16 +391,20 @@ void rbTree<T>::rbInsertFixup(pNode _z)
 				_z->parent()->parent()->setColor(RED);
 				_z = _z->parent()->parent();
 			}
-			/*case 2*/
-			else if (_z == _z->parent()->left())
+			
+			else 
 			{
-				_z = _z->parent();
-				rightRotate(_z);
+				/*case 2*/
+				if (_z == _z->parent()->left())
+				{
+					_z = _z->parent();
+					rightRotate(_z);
+				}
+				/*case 3*/
+				_z->parent()->setColor(BLACK);
+				_z->parent()->parent()->setColor(RED);
+				leftRotate(_z->parent()->parent());//
 			}
-			/*case 3*/
-			_z->parent()->setColor(BLACK);
-			_z->parent()->parent()->setColor(RED);
-			leftRotate(_z);
 		}
 	}
 	root_->setColor(BLACK);
@@ -485,7 +496,7 @@ void rbTree<T>::rbDeleteFixup(pNode _x)
 template<typename T>
 void rbTree<T>::rbFree(pNode _x)
 {
-	if (_x)
+	if (_x != nil_)
 	{
 		rbFree(_x->left());
 		rbFree(_x->right());
