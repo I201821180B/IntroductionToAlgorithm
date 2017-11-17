@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "basic.h"
 #include "binaryTree.h"
@@ -38,6 +39,10 @@ int main()
 	pbt->remove(65);
 	pbt->print();
 	delete pbt;
+	
+	std::shared_ptr<std::string> str = std::make_shared<std::string>("6666666");
+	binaryTree<std::shared_ptr<std::string>> sbt{ str };
+	sbt.print();
 	//_CrtDumpMemoryLeaks(); // 不要使用这个函数，有误报
 
 }

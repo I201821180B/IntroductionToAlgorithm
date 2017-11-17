@@ -333,5 +333,6 @@ void binaryTree<T>::treeFree(pNode _x)
 
 template class binaryTree<int>;
 template class binaryTree<std::string>;
+template class binaryTree<std::shared_ptr<std::string>>;
 
 

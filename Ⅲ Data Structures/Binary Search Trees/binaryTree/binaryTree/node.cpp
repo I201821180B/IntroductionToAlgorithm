@@ -26,9 +26,9 @@ node<T>::node(T _key)
 	std::cout << "node constructor" << std::endl;
 }
 
-//template<typename T>
-//node<T>::~node()
-//{
+template<typename T>
+node<T>::~node()
+{
 //	//if (std::is_pointer<T>::value)
 //	//{
 //		//delete key_;
@@ -39,7 +39,7 @@ node<T>::node(T _key)
 //			>::type
 //		> upkey(key_);
 //	//}
-//}
+}
 
 //template<typename T>
 //node<T>::node(const node<T>& _node)
@@ -76,10 +76,18 @@ void node<T>::setParent(pNode _newparent)
 	this->parent_ = _newparent;
 }
 
-
+//template<typename T> 
+//class node<T*> {
+//	using key_value = T*;
+//	~node()
+//	{
+//		delete key_;
+//	}
+//};
 
 template class node<int>;
 template class node<std::string>;
+template class node<std::shared_ptr<std::string>>;
 
 
 

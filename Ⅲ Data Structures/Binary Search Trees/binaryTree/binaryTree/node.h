@@ -3,8 +3,8 @@
 
 #include "basic.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <type_traits>
 #include <memory>
 
@@ -13,8 +13,9 @@ class node
 {
 public:
 	using pNode = node<T>*;
+	using key_value = T;
 	explicit node(T _key);
-	//~node();
+	~node();
 
 	T key() { return key_; }
 	void setKey(T _key);
@@ -26,7 +27,7 @@ public:
 	void setRight(pNode _newright);
 	void setParent(pNode _newparent);
 private:
-	T key_;
+	key_value key_;
 	pNode left_;
 	pNode right_;
 	pNode parent_;

@@ -8,6 +8,7 @@
 #include <initializer_list>
 #include <string>
 #include <vector>
+#include <memory>
 
 template<typename T>
 class binaryTree
