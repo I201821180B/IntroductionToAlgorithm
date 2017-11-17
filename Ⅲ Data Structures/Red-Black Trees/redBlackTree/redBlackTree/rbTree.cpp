@@ -536,3 +536,4 @@ void rbTree<T>::rbFree(pNode _x)
 
 template class rbTree<int>;
 template class rbTree<std::string>;
+template class rbTree<std::shared_ptr<std::string>>;

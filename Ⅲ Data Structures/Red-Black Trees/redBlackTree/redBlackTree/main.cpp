@@ -33,4 +33,8 @@ int main()
 	prb->remove(65);
 	prb->print();
 	delete prb;
+
+	std::shared_ptr<std::string> str = std::make_shared<std::string>("fffffff");
+	rbTree<std::shared_ptr<std::string>> aa{ str };
+	aa.print();
 }

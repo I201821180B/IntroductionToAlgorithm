@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+#include <memory>
 
 using COLOR = bool;
 const COLOR RED = false;

@@ -75,3 +75,4 @@ void node<T>::setParent(pNode _newparent)
 
 template class node<int>;
 template class node<std::string>;
+template class node<std::shared_ptr<std::string>>;
