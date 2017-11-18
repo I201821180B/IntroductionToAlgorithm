@@ -15,7 +15,7 @@ int main()
 	 * 统一初始化，
 	 * 用bt = { ... }的形式是需要先生成一个匿名类再拷贝给bt的
 	 */
-	binaryTree<int> bt{ 4, 1, 3, 2, 7, 5, 6, 9 }; 
+	binaryTree<int> bt{ 4, 1, 3, 2, 7, 5, 6, 9}; 
 	bt.print();
 
 	std::vector<int> v1{ 46,143,25,32,15,65,57 };
