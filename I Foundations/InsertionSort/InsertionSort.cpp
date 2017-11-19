@@ -4,8 +4,7 @@
 #include <functional>
 #include <ctime>
 
-#include "../../common/benchmark.h"
-#include "../../common/benchmark.cpp"
+#include "common.h"
 
 #define SIZE 1000
 
