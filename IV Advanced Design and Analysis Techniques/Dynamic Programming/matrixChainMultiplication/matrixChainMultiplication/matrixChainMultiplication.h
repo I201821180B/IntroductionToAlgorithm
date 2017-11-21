@@ -1,6 +1,8 @@
 #ifndef _MATRIX_CHAIN_MULTIPLICATION_H_
 #define _MATRIX_CHAIN_MULTIPLICATION_H_
 
+#include "matrix.h"
+
 #include <vector>
 
 using std::vector;
