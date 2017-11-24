@@ -44,4 +44,5 @@ int main()
 	
 	print(m);
 	print(s);
+	printOptimalParens(s, 0, p.size() - 2);
 }

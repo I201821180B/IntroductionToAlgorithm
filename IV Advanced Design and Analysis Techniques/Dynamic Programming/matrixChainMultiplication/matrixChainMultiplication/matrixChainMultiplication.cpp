@@ -52,5 +52,15 @@ void matrixChainOrder(const vector<int32_t>& _p, vector<vector<int32_t>>& _m, ve
 
 void printOptimalParens(const vector<vector<int32_t>>& _s, size_t _i, size_t _j)
 {
-
+	if (_i == _j)
+	{
+		cout << "A" << _i;
+	}
+	else
+	{
+		cout << "(";
+		printOptimalParens(_s, _i, _s[_i][_j]);
+		printOptimalParens(_s, _s[_i][_j]+1, _j);
+		cout << ")";
+	}
 }
