@@ -69,7 +69,6 @@ void matrix<T>::print()
 		}
 		cout << endl;
 	}
-	cout << endl;
 }
 
 
