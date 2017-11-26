@@ -41,11 +41,11 @@ void lcsLength(const vector<T>& _x, const vector<T>& _y, vector<vector<int32_t>>
 }
 
 template<typename T>
-void printLcs(const vector<vector<int32_t>>& _b, const vector<T>& _x, size_t _i, size_t _j)
+void printLcs(const vector<vector<int32_t>>& _b, const vector<T>& _x, int _i, int _j)
 {
 	const int32_t oblique = 0;
 	const int32_t up = 1;
-	if (_i == 0 || _j == 0)
+	if (_i < 0 || _j < 0)
 	{
 		return;
 	}
@@ -68,4 +68,4 @@ template void lcsLength<string>(const vector<string>& _x,
 	const vector<string>& _y, vector<vector<int32_t>>& _b, vector<vector<int32_t>>& _c);
 
 template void printLcs<string>(const vector<vector<int32_t>>& _b,
-	const vector<string>& _x, size_t _i, size_t _j);
+	const vector<string>& _x, int _i, int _j);

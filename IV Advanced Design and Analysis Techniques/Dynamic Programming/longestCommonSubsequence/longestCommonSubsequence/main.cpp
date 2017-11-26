@@ -19,5 +19,23 @@ int main()
 	vector<vector<int32_t>> c;
 
 	lcsLength(x, y, b, c);
-	printLcs(b, x, b[0].size() - 1, b[1].size() - 1);
+	printLcs(b, x, x.size() - 1, y.size() - 1);
+	cout << endl;
+
+	for(const auto& i : b)
+	{
+		for (const auto& ii : i)
+		{
+			cout << ii << " ";
+		}
+		cout << endl;
+	}
+	for (const auto& i : c)
+	{
+		for (const auto& ii : i)
+		{
+			cout << ii << " ";
+		}
+		cout << endl;
+	}
 }
