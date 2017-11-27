@@ -21,13 +21,13 @@ void optimalBst(const vector<float>& _p, const vector<float>& _q, size_t n,
 		for (int32_t i = 0; i < n - len; ++i)
 		{
 			int32_t j = i + len;
-			_e[i + 1][j + 1] = INT32_MAX;//numeric_limits<int32_t>::max();
+			_e[i + 1][j + 1] = FLT_MAX;//numeric_limits<int32_t>::max();
 
 			// ki到kj+1子树的期望代价 = ki到kj的子树期望代价 + kj+1节点的搜索成功频率 + kj+1节点的搜索失败频率
 			w[i][j+1] = w[i][j] + _p[j+1] + _q[j+1];
 			for (int32_t r = i; r < j + 1; ++r)
 			{
-				int32_t t = _e[i + 1][r - 1] + _e[r + 1][j + 1] + w[i + 1][j + 1];
+				float t = _e[i + 1][r - 1] + _e[r + 1][j + 1] + w[i + 1][j + 1];
 				if (t < _e[i + 1][j + 1])
 				{
 					_e[i + 1][j + 1] = t;

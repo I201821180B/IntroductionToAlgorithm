@@ -29,11 +29,18 @@ struct is_specialization<Ref<Args...>, Ref> : std::true_type {};
 //template<typename T, typename A>
 //struct is_vector<std::vector<T, A>> : public std::true_type {};
 
+template<typename T>
+void print(T& _i, typename std::enable_if<
+								!is_specialization<std::remove_const_t<T>, std::vector>::value
+							>::type* = nullptr)//!decay_equiv<T, vector<int>>::value
+{
+	cout << _i << " ";
+}
 
 template<typename T>
 void print(T& _v, typename std::enable_if<
-						is_specialization<std::remove_const_t<T>, std::vector>::value
-					>::type* = nullptr)//decay_equiv<T, vector<int>>::value
+								is_specialization<std::remove_const_t<T>, std::vector>::value
+							>::type* = nullptr)//decay_equiv<T, vector<int>>::value
 {
 	for (const auto& item : _v)
 	{
@@ -42,13 +49,7 @@ void print(T& _v, typename std::enable_if<
 	cout << endl;
 }
 
-template<typename T>
-void print(T& _i, typename std::enable_if<
-						!is_specialization<std::remove_const_t<T>, std::vector>::value
-					>::type* = nullptr)//!decay_equiv<T, vector<int>>::value
-{
-	cout << _i << " ";
-}
+
 
 int main()
 {
@@ -58,8 +59,8 @@ int main()
 	vector<vector<float>> e;
 	vector<vector<size_t>> r;
 
-	/*cout << ((std::is_same< 
-		std::vector<int>, std::vector<string> 
+	/*cout << ((std::is_same<
+		std::vector<int>, std::vector<string>
 	>::value) ? "deep" : "dark");*/
 
 	vector<vector<float>> test = { {0.1f,0.1f,0.1f},{0.2f,0.2f,0.2f},{0.3f,0.3f,0.3f} };
@@ -71,5 +72,5 @@ int main()
 
 	//optimalBst(p, q, p.size(), e, r);
 
-	
+
 }
