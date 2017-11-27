@@ -1,4 +1,5 @@
 #ifndef _LONGEST_COMMON_SUBSEQUENCE_H_
+#define _LONGEST_COMMON_SUBSEQUENCE_H_
 
 #include <iostream>
 #include <vector>
