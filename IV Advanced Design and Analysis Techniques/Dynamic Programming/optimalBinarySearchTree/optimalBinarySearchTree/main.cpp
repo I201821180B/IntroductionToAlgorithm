@@ -4,7 +4,7 @@
 //#include <cstdint>
 #include <type_traits>
 
-//#include "optimalBinarySearchTree.h"
+#include "optimalBinarySearchTree.h"
 
 using std::cout;
 using std::endl;
@@ -34,7 +34,7 @@ void print(T& _i, typename std::enable_if<
 								!is_specialization<std::remove_const_t<T>, std::vector>::value
 							>::type* = nullptr)//!decay_equiv<T, vector<int>>::value
 {
-	cout << _i << " ";
+	cout << _i << "\t\t";
 }
 
 template<typename T>
@@ -63,14 +63,16 @@ int main()
 		std::vector<int>, std::vector<string>
 	>::value) ? "deep" : "dark");*/
 
-	vector<vector<float>> test = { {0.1f,0.1f,0.1f},{0.2f,0.2f,0.2f},{0.3f,0.3f,0.3f} };
+	//vector<vector<float>> test = { {0.1f,0.1f,0.1f},{0.2f,0.2f,0.2f},{0.3f,0.3f,0.3f} };
 
-	int a = 3;
+	/*int a = 3;
 	print(a);
 	print(p);
-	print(test);
+	print(test);*/
 
-	//optimalBst(p, q, p.size(), e, r);
+	optimalBstRe(p, q, p.size(), e, r);
 
+	print(e);
+	print(r);
 
 }
