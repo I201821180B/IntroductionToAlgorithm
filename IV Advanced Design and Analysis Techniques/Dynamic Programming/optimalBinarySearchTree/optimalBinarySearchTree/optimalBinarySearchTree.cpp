@@ -19,11 +19,13 @@ void optimalBst(const vector<float>& _p, const vector<float>& _q, size_t _n,
 		w[i][i-1] = _q[i-1];
 	}
 
-	// len是ki到kj子树的“长度”
+	// len是ki~kj子树的“长度”
 	//for (int32_t len = 1; len < _n + 1; ++len)
 	RANGE(len, 1, _n)
 	{
 		//for (int32_t i = 1; i < _n - len + 2; ++i)
+		// i是子树开始的位置
+		// 计算长度为len的ki到kj子树的最优搜索期望
 		RANGE(i, 1, _n - len + 1)
 		{
 			int32_t j = i + len - 1;
@@ -31,9 +33,16 @@ void optimalBst(const vector<float>& _p, const vector<float>& _q, size_t _n,
 
 			// ki到kj+1子树的期望代价 = ki到kj的子树期望代价 + kj+1节点的搜索成功频率 + kj+1节点的搜索失败频率
 			w[i][j] = w[i][j - 1] + _p[j - 1] + _q[j];
-			// 选取根节点，
+
+			// 选取根节点，取最优根节点
 			for (int32_t r = i; r < j + 1; ++r)
 			{
+				/** ki~kj子树的搜索期望 = ki~kr-1左子树独立的搜索期望 
+				 *                     + kr+1~kj左子树独立的搜索期望 
+				 *                     + ki~kj子树因为深度增加1导致增加的搜索期望
+				 * 独立的意思是，将ki~kr-1节点单独拿出来能达到的搜索期望
+				 * 深度增加1的意思是，ki~kr-1节点构成的独立子树成了kr节点的左子树，ki~kr-1节点深度均增加1
+				 */
 				float t = _e[i][r - 1] + _e[r + 1][j] + w[i][j];
 				if (t < _e[i][j])
 				{
