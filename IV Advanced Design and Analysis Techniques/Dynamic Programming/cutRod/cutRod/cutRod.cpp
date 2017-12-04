@@ -26,7 +26,7 @@ size_t memorizedCutRodAux(const vector<int>& _price, const size_t _length, vecto
 	}
 	else
 	{
-		_max = numeric_limits<int>::min();
+		_max = INT_MIN;// numeric_limits<int>::min();
 		
 		for (int i = 1; i <= _length; i++)
 		{
@@ -50,7 +50,7 @@ size_t bottomUpCutRod(const vector<int>& _price, const size_t _length)
 	for (int i = 1; i <= _length; ++i)
 	{
 		/*求1~i英寸钢管的最优解*/
-		int _max = numeric_limits<int>::min();
+		int _max = INT_MIN; // numeric_limits<int>::min();
 		for (int j = 1; j <= i; ++j)
 		{
 			/*钢管截下j寸，求剩下n-j寸的最优解*/
@@ -70,7 +70,7 @@ void extendedBottomUpCutRod(const vector<int>& _price, const size_t _length, vec
 	for (int i = 1; i <= _length; ++i)
 	{
 		/*求1~i英寸钢管的最优解*/
-		int _max = numeric_limits<int>::min();
+		int _max = INT_MAX; // numeric_limits<int>::min();
 		for (int j = 1; j <= i; ++j)
 		{
 			if (_max < _price[j - 1] + _optimal[i - j])
