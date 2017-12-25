@@ -14,10 +14,10 @@ using std::vector;
 //using std::numeric_limits;
 
 void optimalBst(const vector<float>& _p, const vector<float>& _q, size_t n,
-	vector<vector<float>>& _e, vector<vector<size_t>>& _r);
+    vector<vector<float>>& _e, vector<vector<size_t>>& _r);
 
 void optimalBstRe(const vector<float>& _p, const vector<float>& _q, size_t n,
-	vector<vector<float>>& _e, vector<vector<size_t>>& _r);
+    vector<vector<float>>& _e, vector<vector<size_t>>& _r);
 
 #endif // !_OPTIMAL_BINARY_SEARCH_TREE_H_
 

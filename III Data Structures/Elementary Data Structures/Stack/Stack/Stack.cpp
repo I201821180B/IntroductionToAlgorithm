@@ -2,13 +2,13 @@
 
 template<typename T>
 inline stack<T>::stack()
-	: s()
+    : s()
 {
 }
 
 template<typename T>
 stack<T>::stack(initializer_list<T> il)
-	: s(il)
+    : s(il)
 {
 }
 
@@ -16,41 +16,41 @@ stack<T>::stack(initializer_list<T> il)
 template<typename T>
 stack<T>::~stack()
 {
-	
+    
 }
 */
 
 template<typename T>
 bool stack<T>::isEmpty()
 {
-	return !(s.size());
+    return !(s.size());
 }
 
 template<typename T>
 void stack<T>::push(T x)
 {
-	return s.insert(x);
+    return s.insert(x);
 }
 
 template<typename T>
 T stack<T>::pop()
 {
-	node<T>* n = s.locate(0);
-	T res = n->data;
-	s.removeNode(n);
-	return res;
+    node<T>* n = s.locate(0);
+    T res = n->data;
+    s.removeNode(n);
+    return res;
 }
 
 template<typename T>
 uint32_t stack<T>::size()
 {
-	return s.size();
+    return s.size();
 }
 
 template<typename T>
 void stack<T>::print()
 {
-	s.print();
+    s.print();
 }
 
 template class stack<int>;

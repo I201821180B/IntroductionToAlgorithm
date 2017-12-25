@@ -4,533 +4,533 @@
 template<typename T>
 rbTree<T>::rbTree()
 {
-	nil_ = new node<T>(BLACK);
-	nil_->setParent(nil_);
-	nil_->setLeft(nil_);
-	nil_->setRight(nil_);
-	root_ = nil_;
+    nil_ = new node<T>(BLACK);
+    nil_->setParent(nil_);
+    nil_->setLeft(nil_);
+    nil_->setRight(nil_);
+    root_ = nil_;
 }
 
 template<typename T>
-rbTree<T>::rbTree(std::initializer_list<T> _il)
-	: rbTree()
+rbTree<T>::rbTree(std::initializer_list<T> il)
+    : rbTree()
 {
-	for (const T& item : _il)
-	{
-		insert(item);
-	}
+    for (const T& item : il)
+    {
+        insert(item);
+    }
 }
 
 template<typename T>
-rbTree<T>::rbTree(std::vector<T>& _v)
-	: rbTree()
+rbTree<T>::rbTree(std::vector<T>& v)
+    : rbTree()
 {
-	for (const T& item : _v)
-	{
-		insert(item);
-	}
+    for (const T& item : v)
+    {
+        insert(item);
+    }
 }
 
 template<typename T>
 rbTree<T>::~rbTree()
 {
-	rbFree(root_);
-	delete nil_;
+    rbFree(root_);
+    delete nil_;
 }
 
 template<typename T>
-void rbTree<T>::preOrderTreeWalk(pNode _x)
+void rbTree<T>::preOrderTreeWalk(pNode x)
 {
-	/*«∞–Ú±È¿˙*/
-	if (_x != nil_)
-	{
-		std::cout << _x->key() << " ";
-		preOrderTreeWalk(_x->left());
-		preOrderTreeWalk(_x->right());
-	}
+    /*ÂâçÂ∫èÈÅçÂéÜ*/
+    if (x != nil_)
+    {
+        std::cout << x->key() << " ";
+        preOrderTreeWalk(x->left());
+        preOrderTreeWalk(x->right());
+    }
 }
 
 template<typename T>
-void rbTree<T>::inOrderTreeWalk(pNode _x)
+void rbTree<T>::inOrderTreeWalk(pNode x)
 {
-	/*÷––Ú±È¿˙*/
-	if (_x != nil_)
-	{
-		inOrderTreeWalk(_x->left());
-		std::cout << _x->key() << " ";
-		inOrderTreeWalk(_x->right());
-	}
+    /*‰∏≠Â∫èÈÅçÂéÜ*/
+    if (x != nil_)
+    {
+        inOrderTreeWalk(x->left());
+        std::cout << x->key() << " ";
+        inOrderTreeWalk(x->right());
+    }
 }
 
 template<typename T>
-void rbTree<T>::postOrderTreeWalk(pNode _x)
+void rbTree<T>::postOrderTreeWalk(pNode x)
 {
-	/*∫Û–Ú±È¿˙*/
-	if (_x != nil_)
-	{
-		postOrderTreeWalk(_x->left());
-		postOrderTreeWalk(_x->right());
-		std::cout << _x->key() << " ";
-	}
+    /*ÂêéÂ∫èÈÅçÂéÜ*/
+    if (x != nil_)
+    {
+        postOrderTreeWalk(x->left());
+        postOrderTreeWalk(x->right());
+        std::cout << x->key() << " ";
+    }
 }
 
 template<typename T>
 void rbTree<T>::print()
 {
-	inOrderTreeWalk(root_);
-	std::cout << std::endl;
+    inOrderTreeWalk(root_);
+    std::cout << std::endl;
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::treeSearch(pNode _x, T _key)
+typename rbTree<T>::pNode rbTree<T>::treeSearch(pNode x, T key)
 {
-	/*≤È’“£¨”√µ›πÈ*/
-	if (_x == nil_ || _key == _x->key())
-	{
-		return _x;
-	}
-	if (_key < _x->key())
-	{
-		return treeSearch(_x->left(), _key);
-	}
-	else
-	{
-		return treeSearch(_x->right(), _key);
-	}
+    /*Êü•ÊâæÔºåÁî®ÈÄíÂΩí*/
+    if (x == nil_ || key == x->key())
+    {
+        return x;
+    }
+    if (key < x->key())
+    {
+        return treeSearch(x->left(), key);
+    }
+    else
+    {
+        return treeSearch(x->right(), key);
+    }
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::iterativeTreeSearch(pNode _x, T _key)
+typename rbTree<T>::pNode rbTree<T>::iterativeTreeSearch(pNode x, T key)
 {
-	/*≤È’“£¨”√—≠ª∑¥˙ÃÊµ›πÈ£¨–ß¬ ∏ﬂ*/
-	while (_x != nil_ && _key != _x->key())
-	{
-		if (_key < _x->key())
-		{
-			_x = _x->left();
-		}
-		else
-		{
-			_x = _x->right();
-		}
-	}
-	return _x;
+    /*Êü•ÊâæÔºåÁî®Âæ™ÁéØ‰ª£ÊõøÈÄíÂΩíÔºåÊïàÁéáÈ´ò*/
+    while (x != nil_ && key != x->key())
+    {
+        if (key < x->key())
+        {
+            x = x->left();
+        }
+        else
+        {
+            x = x->right();
+        }
+    }
+    return x;
 }
 
 template<typename T>
-T rbTree<T>::search(T _key)
+T rbTree<T>::search(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	return res->key();
+    pNode res = iterativeTreeSearch(root_, key);
+    return res->key();
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::treeMinimum(pNode _x)
+typename rbTree<T>::pNode rbTree<T>::treeMinimum(pNode x)
 {
-	/*±È¿˙µΩ◊Ó◊Û±ﬂµƒ“ª∏ˆµ„*/
-	while (_x->left() != nil_)
-	{
-		_x = _x->left();
-	}
-	return _x;
+    /*ÈÅçÂéÜÂà∞ÊúÄÂ∑¶ËæπÁöÑ‰∏Ä‰∏™ÁÇπ*/
+    while (x->left() != nil_)
+    {
+        x = x->left();
+    }
+    return x;
 }
 
 template<typename T>
 T rbTree<T>::min()
 {
-	pNode res = treeMinimum(root_);
-	return res->key();
+    pNode res = treeMinimum(root_);
+    return res->key();
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::treeMaximum(pNode _x)
+typename rbTree<T>::pNode rbTree<T>::treeMaximum(pNode x)
 {
-	/*±È¿˙µΩ◊Ó”“±ﬂµƒ“ª∏ˆµ„*/
-	while (_x->right() != nil_)
-	{
-		_x = _x->right();
-	}
-	return _x;
+    /*ÈÅçÂéÜÂà∞ÊúÄÂè≥ËæπÁöÑ‰∏Ä‰∏™ÁÇπ*/
+    while (x->right() != nil_)
+    {
+        x = x->right();
+    }
+    return x;
 }
 
 template<typename T>
 T rbTree<T>::max()
 {
-	pNode res = treeMaximum(root_);
-	return res->key();
+    pNode res = treeMaximum(root_);
+    return res->key();
 }
 
 template<typename T>
-T rbTree<T>::successor(T _key)
+T rbTree<T>::successor(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	pNode suc = rbSuccessor(res);
-	return suc->key();
+    pNode res = iterativeTreeSearch(root_, key);
+    pNode suc = rbSuccessor(res);
+    return suc->key();
 }
 
 template<typename T>
-T rbTree<T>::preSuccessor(T _key)
+T rbTree<T>::preSuccessor(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	pNode preSuc = rbPreSuccessor(res);
-	return preSuc->key();
+    pNode res = iterativeTreeSearch(root_, key);
+    pNode preSuc = rbPreSuccessor(res);
+    return preSuc->key();
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::rbSuccessor(pNode _x)
+typename rbTree<T>::pNode rbTree<T>::rbSuccessor(pNode x)
 {
-	/*µ±«∞Ω⁄µ„”–”“◊”Ω⁄µ„£¨—ÿ◊≈”“±ﬂ’“∫ÛºÃ*/
-	if (_x->right() != nil_)
-	{
-		return treeMinimum(_x->right());
-	}
-	/*µ±«∞Ω⁄µ„√ª”–”“◊”Ω⁄µ„£¨—ÿ◊≈∏∏Ω⁄µ„µƒ”“±ﬂœÚ…œ’“∫ÛºÃ*/
-	pNode y = _x->parent();
-	while (y != nil_ && _x == y->right())
-	{
-		_x = y;
-		y = y->parent();
-	}
-	return y;
+    /*ÂΩìÂâçËäÇÁÇπÊúâÂè≥Â≠êËäÇÁÇπÔºåÊ≤øÁùÄÂè≥ËæπÊâæÂêéÁªß*/
+    if (x->right() != nil_)
+    {
+        return treeMinimum(x->right());
+    }
+    /*ÂΩìÂâçËäÇÁÇπÊ≤°ÊúâÂè≥Â≠êËäÇÁÇπÔºåÊ≤øÁùÄÁà∂ËäÇÁÇπÁöÑÂè≥ËæπÂêë‰∏äÊâæÂêéÁªß*/
+    pNode y = x->parent();
+    while (y != nil_ && x == y->right())
+    {
+        x = y;
+        y = y->parent();
+    }
+    return y;
 }
 
 template<typename T>
-typename rbTree<T>::pNode rbTree<T>::rbPreSuccessor(pNode _x)
+typename rbTree<T>::pNode rbTree<T>::rbPreSuccessor(pNode x)
 {
-	/*µ±«∞Ω⁄µ„”–◊Û◊”Ω⁄µ„£¨—ÿ◊≈◊Û±ﬂ’“«∞«˝*/
-	if (_x->left() != nil_)
-	{
-		return treeMaximum(_x->left());
-	}
-	pNode y = _x->parent();
-	while (y != nil_ && _x == y->left())
-	{
-		_x = y;
-		y = y->parent();
-	}
-	return y;
+    /*ÂΩìÂâçËäÇÁÇπÊúâÂ∑¶Â≠êËäÇÁÇπÔºåÊ≤øÁùÄÂ∑¶ËæπÊâæÂâçÈ©±*/
+    if (x->left() != nil_)
+    {
+        return treeMaximum(x->left());
+    }
+    pNode y = x->parent();
+    while (y != nil_ && x == y->left())
+    {
+        x = y;
+        y = y->parent();
+    }
+    return y;
 }
 
 template<typename T>
-void rbTree<T>::rbInsert(pNode _z)
+void rbTree<T>::rbInsert(pNode z)
 {
-	pNode y = nil_;
-	pNode x = root_;
-	while (x != nil_)
-	{
-		y = x;
-		if (_z->key() < x->key())
-		{
-			x = x->left();
-		}
-		else
-		{
-			x = x->right();
-		}
-	}
-	_z->setParent(y);
-	// if no data in rbTree
-	if (y == nil_)
-	{
-		root_ = _z;
-	}
-	else if (_z->key() < y->key())
-	{
-		y->setLeft(_z);
-	}
-	else
-	{
-		y->setRight(_z);
-	}
-	//_z->setParent(y);
-	_z->setLeft(nil_);
-	_z->setRight(nil_);
-	_z->setColor(RED);
-	rbInsertFixup(_z);
+    pNode y = nil_;
+    pNode x = root_;
+    while (x != nil_)
+    {
+        y = x;
+        if (z->key() < x->key())
+        {
+            x = x->left();
+        }
+        else
+        {
+            x = x->right();
+        }
+    }
+    z->setParent(y);
+    // if no data in rbTree
+    if (y == nil_)
+    {
+        root_ = z;
+    }
+    else if (z->key() < y->key())
+    {
+        y->setLeft(z);
+    }
+    else
+    {
+        y->setRight(z);
+    }
+    //z->setParent(y);
+    z->setLeft(nil_);
+    z->setRight(nil_);
+    z->setColor(RED);
+    rbInsertFixup(z);
 }
 
 template<typename T>
-void rbTree<T>::insert(T _key)
+void rbTree<T>::insert(T key)
 {
-	pNode newNode = new node<T>(_key);
-	rbInsert(newNode);
+    pNode newNode = new node<T>(key);
+    rbInsert(newNode);
 }
 
 template<typename T>
-void rbTree<T>::rbDelete(pNode _z)
+void rbTree<T>::rbDelete(pNode z)
 {
-	pNode y = _z;
-	pNode x = nil_;
-	COLOR yOriginColor = y->color();
-	if (_z->left() == nil_)
-	{
-		x = _z->right();
-		rbTransplant(_z, _z->right());
-	}
-	else if (_z->right() == nil_)
-	{
-		x = _z->left();
-		rbTransplant(_z, _z->left());
-	}
-	else
-	{
-		y = treeMinimum(_z->right());
-		yOriginColor = y->color();
-		x = y->right();
-		if (y->parent() == _z)
-		{
-			x->setParent(y);
-		}
-		else
-		{
-			rbTransplant(y, y->right());
-			y->setRight(_z->right());
-			y->right()->setParent(y);
-		}
-		rbTransplant(_z, y);
-		y->setLeft(_z->left());
-		y->left()->setParent(y);
-		y->setColor(_z->color());
-	}
-	if (yOriginColor == BLACK)
-	{
-		rbDeleteFixup(x);
-	}
-	delete _z;
+    pNode y = z;
+    pNode x = nil_;
+    COLOR yOriginColor = y->color();
+    if (z->left() == nil_)
+    {
+        x = z->right();
+        rbTransplant(z, z->right());
+    }
+    else if (z->right() == nil_)
+    {
+        x = z->left();
+        rbTransplant(z, z->left());
+    }
+    else
+    {
+        y = treeMinimum(z->right());
+        yOriginColor = y->color();
+        x = y->right();
+        if (y->parent() == z)
+        {
+            x->setParent(y);
+        }
+        else
+        {
+            rbTransplant(y, y->right());
+            y->setRight(z->right());
+            y->right()->setParent(y);
+        }
+        rbTransplant(z, y);
+        y->setLeft(z->left());
+        y->left()->setParent(y);
+        y->setColor(z->color());
+    }
+    if (yOriginColor == BLACK)
+    {
+        rbDeleteFixup(x);
+    }
+    delete z;
 }
 
 template<typename T>
-void rbTree<T>::remove(T _key)
+void rbTree<T>::remove(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	rbDelete(res);
+    pNode res = iterativeTreeSearch(root_, key);
+    rbDelete(res);
 }
 
 template<typename T>
-void rbTree<T>::leftRotate(pNode _x)
+void rbTree<T>::leftRotate(pNode x)
 {
-	/*set right node of _x*/
-	pNode y = _x->right();
-	_x->setRight(y->left());
+    /*set right node of x*/
+    pNode y = x->right();
+    x->setRight(y->left());
 
-	/*set parent of y's left node*/
-	if (y->left() != nil_)
-	{
-		y->left()->setParent(_x);
-	}
+    /*set parent of y's left node*/
+    if (y->left() != nil_)
+    {
+        y->left()->setParent(x);
+    }
 
-	/*set parent node of y*/
-	y->setParent(_x->parent());
+    /*set parent node of y*/
+    y->setParent(x->parent());
 
-	/*set _x's parent left or right node*/
-	if (_x->parent() == nil_)
-	{
-		root_ = y;
-	}
-	else if (_x == _x->parent()->left())
-	{
-		_x->parent()->setLeft(y);
-	}
-	else
-	{
-		_x->parent()->setRight(y);
-	}
+    /*set x's parent left or right node*/
+    if (x->parent() == nil_)
+    {
+        root_ = y;
+    }
+    else if (x == x->parent()->left())
+    {
+        x->parent()->setLeft(y);
+    }
+    else
+    {
+        x->parent()->setRight(y);
+    }
 
-	y->setLeft(_x);
-	_x->setParent(y);
+    y->setLeft(x);
+    x->setParent(y);
 }
 
 template<typename T>
-void rbTree<T>::rightRotate(pNode _y)
+void rbTree<T>::rightRotate(pNode y)
 {
-	/*set left node of _y*/
-	pNode x = _y->left();
-	_y->setLeft(x->right());
+    /*set left node of y*/
+    pNode x = y->left();
+    y->setLeft(x->right());
 
-	/*set parent node of x's right node */
-	if (x->right() != nil_)
-	{
-		x->right()->setParent(_y);
-	}
+    /*set parent node of x's right node */
+    if (x->right() != nil_)
+    {
+        x->right()->setParent(y);
+    }
 
-	/*set parent node of x*/
-	x->setParent(_y->parent());
+    /*set parent node of x*/
+    x->setParent(y->parent());
 
-	/*set _y's parent left or right node*/
-	if (_y->parent() == nil_)
-	{
-		root_ = x;
-	}
-	else if (_y == _y->parent()->left())
-	{
-		_y->parent()->setLeft(x);
-	}
-	else
-	{
-		_y->parent()->setRight(x);
-	}
+    /*set y's parent left or right node*/
+    if (y->parent() == nil_)
+    {
+        root_ = x;
+    }
+    else if (y == y->parent()->left())
+    {
+        y->parent()->setLeft(x);
+    }
+    else
+    {
+        y->parent()->setRight(x);
+    }
 
-	x->setRight(_y);
-	_y->setParent(x);
+    x->setRight(y);
+    y->setParent(x);
 }
 
 template<typename T>
-void rbTree<T>::rbInsertFixup(pNode _z)
+void rbTree<T>::rbInsertFixup(pNode z)
 {
-	while (_z->parent()->color() == RED)
-	{
-		/*»Áπ˚∏√Ω⁄µ„‘⁄“ª∏ˆ◊” ˜µƒ◊Û÷¶*/
-		if (_z->parent() == _z->parent()->parent()->left())
-		{
-			/*»°µ√ ÂΩ⁄µ„*/
-			pNode y = _z->parent()->parent()->right();
-			/*case 1: _z∫Õ∏∏Ω⁄µ„∂º «∫Ï…´£¨ ÂΩ⁄µ„“≤ «∫Ï…´*/
-			if (y->color() == RED)
-			{
-				_z->parent()->setColor(BLACK);
-				y->setColor(BLACK);
-				_z->parent()->parent()->setColor(RED);
-				_z = _z->parent()->parent();
-			}
-			else
-			{
-				/*case 2£∫_z∫Õ∏∏Ω⁄µ„∂º «∫Ï…´£¨ ÂΩ⁄µ„ «∫⁄…´£¨_zŒ™”“∫¢◊”*/
-				if (_z == _z->parent()->right())
-				{
-					_z = _z->parent();
-					leftRotate(_z);
-				}
-				/*case 3£∫_z∫Õ∏∏Ω⁄µ„∂º «∫Ï…´£¨ ÂΩ⁄µ„ «∫⁄…´£¨_zŒ™◊Û∫¢◊”*/
-				_z->parent()->setColor(BLACK);
-				_z->parent()->parent()->setColor(RED);
-				rightRotate(_z->parent()->parent());//
-			}
-		}
-		/*»Áπ˚∏√Ω⁄µ„‘⁄“ª∏ˆ◊” ˜µƒ”“÷¶*/
-		else
-		{
-			pNode y = _z->parent()->parent()->left();
-			/*case 1*/
-			if (y->color() == RED)
-			{
-				_z->parent()->setColor(BLACK);
-				y->setColor(BLACK);
-				_z->parent()->parent()->setColor(RED);
-				_z = _z->parent()->parent();
-			}
-			
-			else 
-			{
-				/*case 2*/
-				if (_z == _z->parent()->left())
-				{
-					_z = _z->parent();
-					rightRotate(_z);
-				}
-				/*case 3*/
-				_z->parent()->setColor(BLACK);
-				_z->parent()->parent()->setColor(RED);
-				leftRotate(_z->parent()->parent());//
-			}
-		}
-	}
-	root_->setColor(BLACK);
+    while (z->parent()->color() == RED)
+    {
+        /*Â¶ÇÊûúËØ•ËäÇÁÇπÂú®‰∏Ä‰∏™Â≠êÊ†ëÁöÑÂ∑¶Êûù*/
+        if (z->parent() == z->parent()->parent()->left())
+        {
+            /*ÂèñÂæóÂèîËäÇÁÇπ*/
+            pNode y = z->parent()->parent()->right();
+            /*case 1: zÂíåÁà∂ËäÇÁÇπÈÉΩÊòØÁ∫¢Ëâ≤ÔºåÂèîËäÇÁÇπ‰πüÊòØÁ∫¢Ëâ≤*/
+            if (y->color() == RED)
+            {
+                z->parent()->setColor(BLACK);
+                y->setColor(BLACK);
+                z->parent()->parent()->setColor(RED);
+                z = z->parent()->parent();
+            }
+            else
+            {
+                /*case 2ÔºözÂíåÁà∂ËäÇÁÇπÈÉΩÊòØÁ∫¢Ëâ≤ÔºåÂèîËäÇÁÇπÊòØÈªëËâ≤Ôºåz‰∏∫Âè≥Â≠©Â≠ê*/
+                if (z == z->parent()->right())
+                {
+                    z = z->parent();
+                    leftRotate(z);
+                }
+                /*case 3ÔºözÂíåÁà∂ËäÇÁÇπÈÉΩÊòØÁ∫¢Ëâ≤ÔºåÂèîËäÇÁÇπÊòØÈªëËâ≤Ôºåz‰∏∫Â∑¶Â≠©Â≠ê*/
+                z->parent()->setColor(BLACK);
+                z->parent()->parent()->setColor(RED);
+                rightRotate(z->parent()->parent());//
+            }
+        }
+        /*Â¶ÇÊûúËØ•ËäÇÁÇπÂú®‰∏Ä‰∏™Â≠êÊ†ëÁöÑÂè≥Êûù*/
+        else
+        {
+            pNode y = z->parent()->parent()->left();
+            /*case 1*/
+            if (y->color() == RED)
+            {
+                z->parent()->setColor(BLACK);
+                y->setColor(BLACK);
+                z->parent()->parent()->setColor(RED);
+                z = z->parent()->parent();
+            }
+            
+            else 
+            {
+                /*case 2*/
+                if (z == z->parent()->left())
+                {
+                    z = z->parent();
+                    rightRotate(z);
+                }
+                /*case 3*/
+                z->parent()->setColor(BLACK);
+                z->parent()->parent()->setColor(RED);
+                leftRotate(z->parent()->parent());//
+            }
+        }
+    }
+    root_->setColor(BLACK);
 }
 
 template<typename T>
-void rbTree<T>::rbTransplant(pNode _u, pNode _v)
+void rbTree<T>::rbTransplant(pNode u, pNode v)
 {
-	if (_u->parent() == nil_)
-	{
-		root_ = _v;
-	}
-	else if (_u == _u->parent()->left())
-	{
-		_u->parent()->setLeft(_v);
-	}
-	else
-	{
-		_u->parent()->setRight(_v);
-	}
-	_v->setParent(_u->parent());
+    if (u->parent() == nil_)
+    {
+        root_ = v;
+    }
+    else if (u == u->parent()->left())
+    {
+        u->parent()->setLeft(v);
+    }
+    else
+    {
+        u->parent()->setRight(v);
+    }
+    v->setParent(u->parent());
 }
 
 template<typename T>
-void rbTree<T>::rbDeleteFixup(pNode _x)
+void rbTree<T>::rbDeleteFixup(pNode x)
 {
-	while (_x != root_ && _x->color() == BLACK)
-	{
-		if (_x == _x->parent()->left())
-		{
-			pNode w = _x->parent()->right();
-			if (w->color() == RED)
-			{
-				w->setColor(BLACK);
-				_x->parent()->setColor(RED);
-				leftRotate(_x->parent());
-				w = _x->parent()->right();
-			}
-			if (w->left()->color() == BLACK && w->right()->color() == BLACK)
-			{
-				w->setColor(RED);
-				_x = _x->parent();
-			}
-			else if (w->right()->color() == BLACK)
-			{
-				w->left()->setColor(BLACK);
-				w->setColor(RED);
-				rightRotate(w);
-				w = _x->parent()->right();
-			}
-			w->setColor(_x->parent()->color());
-			_x->parent()->setColor(BLACK);
-			w->right()->setColor(BLACK);
-			leftRotate(_x->parent());
-			_x = root_;
-		}
-		else
-		{
-			pNode w = _x->parent()->left();
-			if (w->color() == RED)
-			{
-				w->setColor(BLACK);
-				_x->parent()->setColor(RED);
-				rightRotate(_x->parent());
-				w = _x->parent()->left();
-			}
-			if (w->right()->color() == BLACK && w->left()->color() == BLACK)
-			{
-				w->setColor(RED);
-				_x = _x->parent();
-			}
-			else if (w->left()->color() == BLACK)
-			{
-				w->right()->setColor(BLACK);
-				w->setColor(RED);
-				leftRotate(w);
-				w = _x->parent()->left();
-			}
-			w->setColor(_x->parent()->color());
-			_x->parent()->setColor(BLACK);
-			w->left()->setColor(BLACK);
-			rightRotate(_x->parent());
-			_x = root_;
-		}
-	}
-	_x->setColor(BLACK);
+    while (x != root_ && x->color() == BLACK)
+    {
+        if (x == x->parent()->left())
+        {
+            pNode w = x->parent()->right();
+            if (w->color() == RED)
+            {
+                w->setColor(BLACK);
+                x->parent()->setColor(RED);
+                leftRotate(x->parent());
+                w = x->parent()->right();
+            }
+            if (w->left()->color() == BLACK && w->right()->color() == BLACK)
+            {
+                w->setColor(RED);
+                x = x->parent();
+            }
+            else if (w->right()->color() == BLACK)
+            {
+                w->left()->setColor(BLACK);
+                w->setColor(RED);
+                rightRotate(w);
+                w = x->parent()->right();
+            }
+            w->setColor(x->parent()->color());
+            x->parent()->setColor(BLACK);
+            w->right()->setColor(BLACK);
+            leftRotate(x->parent());
+            x = root_;
+        }
+        else
+        {
+            pNode w = x->parent()->left();
+            if (w->color() == RED)
+            {
+                w->setColor(BLACK);
+                x->parent()->setColor(RED);
+                rightRotate(x->parent());
+                w = x->parent()->left();
+            }
+            if (w->right()->color() == BLACK && w->left()->color() == BLACK)
+            {
+                w->setColor(RED);
+                x = x->parent();
+            }
+            else if (w->left()->color() == BLACK)
+            {
+                w->right()->setColor(BLACK);
+                w->setColor(RED);
+                leftRotate(w);
+                w = x->parent()->left();
+            }
+            w->setColor(x->parent()->color());
+            x->parent()->setColor(BLACK);
+            w->left()->setColor(BLACK);
+            rightRotate(x->parent());
+            x = root_;
+        }
+    }
+    x->setColor(BLACK);
 }
 
 template<typename T>
-void rbTree<T>::rbFree(pNode _x)
+void rbTree<T>::rbFree(pNode x)
 {
-	if (_x != nil_)
-	{
-		rbFree(_x->left());
-		rbFree(_x->right());
-		delete _x;
-		_x = nullptr;
-		return;
-	}
+    if (x != nil_)
+    {
+        rbFree(x->left());
+        rbFree(x->right());
+        delete x;
+        x = nullptr;
+        return;
+    }
 }
 
 

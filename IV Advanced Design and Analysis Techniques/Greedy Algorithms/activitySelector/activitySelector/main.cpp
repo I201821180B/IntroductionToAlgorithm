@@ -11,5 +11,6 @@ using std::vector;
 
 int main()
 {
-
+	vector<int32_t> s{};
+	vector<int32_t> f{};
 }

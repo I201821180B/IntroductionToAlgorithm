@@ -1,6 +1,6 @@
 /**
- * 1. ËùÓĞÖ¸ÕëÎª¿Õ»ò²»Îª¿ÕµÄÅĞ¶Ï£¬È«²¿Ğ´³Éif(!p)»òif(p)µÄĞÎÊ½£¬²»ºÍnullptr×ö±È½Ï
- * 2. nullptrÊÇÎªÁËÍêÃÀ×ª·¢ºÍÖØÔØÆ¥ÅäÓÃµÄ
+ * 1. æ‰€æœ‰æŒ‡é’ˆä¸ºç©ºæˆ–ä¸ä¸ºç©ºçš„åˆ¤æ–­ï¼Œå…¨éƒ¨å†™æˆif(!p)æˆ–if(p)çš„å½¢å¼ï¼Œä¸å’Œnullptråšæ¯”è¾ƒ
+ * 2. nullptræ˜¯ä¸ºäº†å®Œç¾è½¬å‘å’Œé‡è½½åŒ¹é…ç”¨çš„
  */
 
 #include "binaryTree.h"
@@ -9,330 +9,328 @@
 template<typename T>
 binaryTree<T>::binaryTree()
 {
-	root_ = nullptr;
+    root_ = nullptr;
 }
 
 template<typename T>
-binaryTree<T>::binaryTree(std::initializer_list<T> _il)
-	: binaryTree()
+binaryTree<T>::binaryTree(std::initializer_list<T> il)
+    : binaryTree()
 {
-	for (const T& item : _il)
-	{
-		/*pNode newNode = new node<T>(item);
-		treeInsert(newNode);*/
-		insert(item);
-	}
+    for (const T& item : il)
+    {
+        /*pNode newNode = new node<T>(item);
+        treeInsert(newNode);*/
+        insert(item);
+    }
 }
 
 template<typename T>
-binaryTree<T>::binaryTree(std::vector<T>& _v)
-	: binaryTree()
+binaryTree<T>::binaryTree(std::vector<T>& v)
+    : binaryTree()
 {
-	for (const T& item : _v)
-	{
-		//std::cout << item << std::endl;
-		/*pNode newNode = new node<T>(item);
-		treeInsert(newNode);*/
-		insert(item);
-	}
+    for (const T& item : v)
+    {
+        //std::cout << item << std::endl;
+        /*pNode newNode = new node<T>(item);
+        treeInsert(newNode);*/
+        insert(item);
+    }
 }
 
 template<typename T>
 binaryTree<T>::~binaryTree()
 {
-	treeFree(root_);
+    treeFree(root_);
 }
 
 template<typename T>
-void binaryTree<T>::preOrderTreeWalk(pNode _x)
+void binaryTree<T>::preOrderTreeWalk(pNode x)
 {
-	/*Ç°Ğò±éÀú*/
-	if (_x)
-	{
-		std::cout << _x->key() << " ";
-		preOrderTreeWalk(_x->left());
-		preOrderTreeWalk(_x->right());
-	}
+    /*å‰åºéå†*/
+    if (x)
+    {
+        std::cout << x->key() << " ";
+        preOrderTreeWalk(x->left());
+        preOrderTreeWalk(x->right());
+    }
 }
 
 template<typename T>
-void binaryTree<T>::inOrderTreeWalk(pNode _x)
+void binaryTree<T>::inOrderTreeWalk(pNode x)
 {
-	/*ÖĞĞò±éÀú*/
-	if (_x)
-	{
-		inOrderTreeWalk(_x->left());
-		std::cout << _x->key() << " ";
-		inOrderTreeWalk(_x->right());
-	}
+    /*ä¸­åºéå†*/
+    if (x)
+    {
+        inOrderTreeWalk(x->left());
+        std::cout << x->key() << " ";
+        inOrderTreeWalk(x->right());
+    }
 }
 
 template<typename T>
-void binaryTree<T>::postOrderTreeWalk(pNode _x)
+void binaryTree<T>::postOrderTreeWalk(pNode x)
 {
-	/*ºóĞò±éÀú*/
-	if (_x)
-	{
-		postOrderTreeWalk(_x->left());
-		postOrderTreeWalk(_x->right());
-		std::cout << _x->key() << " ";
-	}
+    /*ååºéå†*/
+    if (x)
+    {
+        postOrderTreeWalk(x->left());
+        postOrderTreeWalk(x->right());
+        std::cout << x->key() << " ";
+    }
 }
 
 template<typename T>
 void binaryTree<T>::print()
 {
-	inOrderTreeWalk(root_);
-	std::cout << std::endl;
+    inOrderTreeWalk(root_);
+    std::cout << std::endl;
 }
 
 /**
- * 1. ÀàÄ£°åµÄ³ÉÔ±º¯ÊıµÄ·µ»ØÖµÊÇÀàĞÍ±ğÃûÊ±£¬ĞèÒªÊ¹ÓÃtypename class<T>::aliasÕâÖÖĞÎÊ½
- * 2. Éæ¼°µ½Ò»¸öÔÚ template£¨Ä£°å£©ÖĞµÄ nested dependent type name£¨Ç¶Ì×ÒÀÀµÀàĞÍÃû£©
- *    µÄÈÎºÎÊ±ºò£¬Äã±ØĞë°Ñµ¥´Ê typename ·ÅÔÚ½ô°¤×ÅËüµÄÇ°Ãæ
- * 3. ÕâÑù²ÅÄÜ¸æËß±àÒëÆ÷°ÑËüµ±×÷Ò»¸öÀàĞÍÀ´´¦Àí£¬·ñÔò»á±»µ±³ÉÊÇ±ğµÄ±êÊ¶·û
+ * 1. ç±»æ¨¡æ¿çš„æˆå‘˜å‡½æ•°çš„è¿”å›å€¼æ˜¯ç±»å‹åˆ«åæ—¶ï¼Œéœ€è¦ä½¿ç”¨typename class<T>::aliasè¿™ç§å½¢å¼
+ * 2. æ¶‰åŠåˆ°ä¸€ä¸ªåœ¨ templateï¼ˆæ¨¡æ¿ï¼‰ä¸­çš„ nested dependent type nameï¼ˆåµŒå¥—ä¾èµ–ç±»å‹åï¼‰
+ *    çš„ä»»ä½•æ—¶å€™ï¼Œä½ å¿…é¡»æŠŠå•è¯ typename æ”¾åœ¨ç´§æŒ¨ç€å®ƒçš„å‰é¢
+ * 3. è¿™æ ·æ‰èƒ½å‘Šè¯‰ç¼–è¯‘å™¨æŠŠå®ƒå½“ä½œä¸€ä¸ªç±»å‹æ¥å¤„ç†ï¼Œå¦åˆ™ä¼šè¢«å½“æˆæ˜¯åˆ«çš„æ ‡è¯†ç¬¦
  */
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::treeSearch(pNode _x, T _key)
+typename binaryTree<T>::pNode binaryTree<T>::treeSearch(pNode x, T key)
 {
-	/*²éÕÒ£¬ÓÃµİ¹é*/
-	if (!_x || _key == _x->key())
-	{
-		return _x;
-	}
-	if (_key < _x->key())
-	{
-		return treeSearch(_x->left(), _key);
-	}
-	else
-	{
-		return treeSearch(_x->right(), _key);
-	}
+    /*æŸ¥æ‰¾ï¼Œç”¨é€’å½’*/
+    if (!x || key == x->key())
+    {
+        return x;
+    }
+    if (key < x->key())
+    {
+        return treeSearch(x->left(), key);
+    }
+    else
+    {
+        return treeSearch(x->right(), key);
+    }
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::iterativeTreeSearch(pNode _x, T _key)
+typename binaryTree<T>::pNode binaryTree<T>::iterativeTreeSearch(pNode x, T key)
 {
-	/*²éÕÒ£¬ÓÃÑ­»·´úÌæµİ¹é£¬Ğ§ÂÊ¸ß*/
-	while (_x && _key != _x->key())
-	{
-		if (_key < _x->key())
-		{
-			_x = _x->left();
-		}
-		else
-		{
-			_x = _x->right();
-		}
-	}
-	return _x;
+    /*æŸ¥æ‰¾ï¼Œç”¨å¾ªç¯ä»£æ›¿é€’å½’ï¼Œæ•ˆç‡é«˜*/
+    while (x && key != x->key())
+    {
+        if (key < x->key())
+        {
+            x = x->left();
+        }
+        else
+        {
+            x = x->right();
+        }
+    }
+    return x;
 }
 
 template<typename T>
-T binaryTree<T>::search(T _key)
+T binaryTree<T>::search(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	return res->key();
+    pNode res = iterativeTreeSearch(root_, key);
+    return res->key();
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::treeMinimum(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::treeMinimum(pNode x)
 {
-	/*±éÀúµ½×î×ó±ßµÄÒ»¸öµã*/
-	while (_x->left())
-	{
-		_x = _x->left();
-	}
-	return _x;
+    /*éå†åˆ°æœ€å·¦è¾¹çš„ä¸€ä¸ªç‚¹*/
+    while (x->left())
+    {
+        x = x->left();
+    }
+    return x;
 }
 
 template<typename T>
 T binaryTree<T>::min()
 {
-	pNode res = treeMinimum(root_);
-	return res->key();
+    pNode res = treeMinimum(root_);
+    return res->key();
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::treeMaximum(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::treeMaximum(pNode x)
 {
-	/*±éÀúµ½×îÓÒ±ßµÄÒ»¸öµã*/
-	while (_x->right())
-	{
-		_x = _x->right();
-	}
-	return _x;
+    /*éå†åˆ°æœ€å³è¾¹çš„ä¸€ä¸ªç‚¹*/
+    while (x->right())
+    {
+        x = x->right();
+    }
+    return x;
 }
 
 template<typename T>
 T binaryTree<T>::max()
 {
-	pNode res = treeMaximum(root_);
-	return res->key();
+    pNode res = treeMaximum(root_);
+    return res->key();
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::treeSuccessor(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::treeSuccessor(pNode x)
 {
-	/*µ±Ç°½ÚµãÓĞÓÒ×Ó½Úµã£¬ÑØ×ÅÓÒ±ßÕÒºó¼Ì*/
-	if (_x->right())
-	{
-		return treeMinimum(_x->right());
-	}
-	/*µ±Ç°½ÚµãÃ»ÓĞÓÒ×Ó½Úµã£¬ÑØ×Å¸¸½ÚµãµÄÓÒ±ßÏòÉÏÕÒºó¼Ì*/
-	pNode y = _x->parent();
-	while (y && _x == y->right())
-	{
-		_x = y;
-		y = y->parent();
-	}
-	return y;
+    /*å½“å‰èŠ‚ç‚¹æœ‰å³å­èŠ‚ç‚¹ï¼Œæ²¿ç€å³è¾¹æ‰¾åç»§*/
+    if (x->right())
+    {
+        return treeMinimum(x->right());
+    }
+    /*å½“å‰èŠ‚ç‚¹æ²¡æœ‰å³å­èŠ‚ç‚¹ï¼Œæ²¿ç€çˆ¶èŠ‚ç‚¹çš„å³è¾¹å‘ä¸Šæ‰¾åç»§*/
+    pNode y = x->parent();
+    while (y && x == y->right())
+    {
+        x = y;
+        y = y->parent();
+    }
+    return y;
 }
 
 template<typename T>
-typename binaryTree<T>::pNode binaryTree<T>::treePreSuccessor(pNode _x)
+typename binaryTree<T>::pNode binaryTree<T>::treePreSuccessor(pNode x)
 {
-	/*µ±Ç°½ÚµãÓĞ×ó×Ó½Úµã£¬ÑØ×Å×ó±ßÕÒÇ°Çı*/
-	if (_x->left())
-	{
-		return treeMaximum(_x->left());
-	}
-	pNode y = _x->parent();
-	while (y && _x == y->left())
-	{
-		_x = y;
-		y = y->parent();
-	}
-	return y;
+    /*å½“å‰èŠ‚ç‚¹æœ‰å·¦å­èŠ‚ç‚¹ï¼Œæ²¿ç€å·¦è¾¹æ‰¾å‰é©±*/
+    if (x->left())
+    {
+        return treeMaximum(x->left());
+    }
+    pNode y = x->parent();
+    while (y && x == y->left())
+    {
+        x = y;
+        y = y->parent();
+    }
+    return y;
 }
 
 template<typename T>
-T binaryTree<T>::successor(T _key)
+T binaryTree<T>::successor(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	pNode suc = treeSuccessor(res);
-	return suc->key();
+    pNode res = iterativeTreeSearch(root_, key);
+    pNode suc = treeSuccessor(res);
+    return suc->key();
 }
 
 template<typename T>
-T binaryTree<T>::preSuccessor(T _key)
+T binaryTree<T>::preSuccessor(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	pNode suc = treePreSuccessor(res);
-	return suc->key();
+    pNode res = iterativeTreeSearch(root_, key);
+    pNode suc = treePreSuccessor(res);
+    return suc->key();
 }
 
 template<typename T>
-void binaryTree<T>::treeInsert(pNode _z)
+void binaryTree<T>::treeInsert(pNode z)
 {
-	pNode y = nullptr;
-	pNode x = root_;
-	while (x)
-	{
-		y = x;
-		if (_z->key() < x->key())
-		{
-			x = x->left();
-		}
-		else
-		{
-			x = x->right();
-		}
-	}
-	_z->setParent(y);
-	if (!y)
-	{
-		/*Ê÷Îª¿Õ*/
-		root_ = _z;
-	}
-	else if (_z->key() < y->key())
-	{
-		y->setLeft(_z);
-	}
-	else
-	{
-		y->setRight(_z);
-	}
+    pNode y = nullptr;
+    pNode x = root_;
+    while (x)
+    {
+        y = x;
+        if (z->key() < x->key())
+        {
+            x = x->left();
+        }
+        else
+        {
+            x = x->right();
+        }
+    }
+    z->setParent(y);
+    if (!y)
+    {
+        /*æ ‘ä¸ºç©º*/
+        root_ = z;
+    }
+    else if (z->key() < y->key())
+    {
+        y->setLeft(z);
+    }
+    else
+    {
+        y->setRight(z);
+    }
 }
 
 template<typename T>
-void binaryTree<T>::transplant(pNode _u, pNode _v)
+void binaryTree<T>::transplant(pNode u, pNode v)
 {
-	if (!(_u->parent()))
-	{
-		root_ = _u;
-	}
-	else if (_u == _u->parent()->left())
-	{
-		_u->parent()->setLeft(_v);
-	}
-	else
-	{
-		_u->parent()->setRight(_v);
-	}
-	if (_v != nullptr)
-	{
-		_v->setParent(_u->parent());
-	}
+    if (!(u->parent()))
+    {
+        root_ = u;
+    }
+    else if (u == u->parent()->left())
+    {
+        u->parent()->setLeft(v);
+    }
+    else
+    {
+        u->parent()->setRight(v);
+    }
+    if (v != nullptr)
+    {
+        v->setParent(u->parent());
+    }
 }
 
 template<typename T>
-void binaryTree<T>::treeDelete(pNode _z)
+void binaryTree<T>::treeDelete(pNode z)
 {
-	if (!(_z->left()))
-	{
-		transplant(_z, _z->right());
-	}
-	else if (!(_z->right()))
-	{
-		transplant(_z, _z->left());
-	}
-	else
-	{
-		/*ÓÃy»»_z*/
-		pNode y = treeMinimum(_z);
-		if (y->parent() != _z)
-		{
-			transplant(y, y->right());
-			y->setRight(_z->right());
-			y->right()->setParent(y);
-		}
-		transplant(_z, y);
-		y->setLeft(_z->left());
-		y->left()->setParent(y);
-	}
-	delete _z;
+    if (!(z->left()))
+    {
+        transplant(z, z->right());
+    }
+    else if (!(z->right()))
+    {
+        transplant(z, z->left());
+    }
+    else
+    {
+        /*ç”¨yæ¢z*/
+        pNode y = treeMinimum(z);
+        if (y->parent() != z)
+        {
+            transplant(y, y->right());
+            y->setRight(z->right());
+            y->right()->setParent(y);
+        }
+        transplant(z, y);
+        y->setLeft(z->left());
+        y->left()->setParent(y);
+    }
+    delete z;
 }
 
 template<typename T>
-void binaryTree<T>::insert(T _key)
+void binaryTree<T>::insert(T key)
 {
-	pNode newNode = new node<T>(_key);
-	treeInsert(newNode);
+    pNode newNode = new node<T>(key);
+    treeInsert(newNode);
 }
 
 template<typename T>
-void binaryTree<T>::remove(T _key)
+void binaryTree<T>::remove(T key)
 {
-	pNode res = iterativeTreeSearch(root_, _key);
-	treeDelete(res);
+    pNode res = iterativeTreeSearch(root_, key);
+    treeDelete(res);
 }
 
 template<typename T>
-void binaryTree<T>::treeFree(pNode _x)
+void binaryTree<T>::treeFree(pNode x)
 {
-	if (_x)
-	{
-		treeFree(_x->left());
-		treeFree(_x->right());
-		delete _x;
-		_x = nullptr;
-		return;
-	}
+    if (x)
+    {
+        treeFree(x->left());
+        treeFree(x->right());
+        delete x;
+        x = nullptr;
+        return;
+    }
 }
 
 template class binaryTree<int>;
 template class binaryTree<std::string>;
 template class binaryTree<std::shared_ptr<std::string>>;
-
-

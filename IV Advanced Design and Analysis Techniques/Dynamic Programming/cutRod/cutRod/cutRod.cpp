@@ -1,100 +1,100 @@
 #include "cutRod.h"
 
 /**
- * ¶¯Ì¬¹æ»®·½·¨ÒªÇó×ĞÏ¸°²ÅÅÇó½âË³Ğò£¬¶ÔÃ¿¸ö×ÓÎÊÌâÖ»Çó½âÒ»´Î£¬²¢½«½á¹û±£´æÆğÀ´
- * ÏÂ´ÎÊ¹ÓÃÊ±Ö»Ğè²éÕÒ±£´æµÄ½á¹û
+ * åŠ¨æ€è§„åˆ’æ–¹æ³•è¦æ±‚ä»”ç»†å®‰æ’æ±‚è§£é¡ºåºï¼Œå¯¹æ¯ä¸ªå­é—®é¢˜åªæ±‚è§£ä¸€æ¬¡ï¼Œå¹¶å°†ç»“æœä¿å­˜èµ·æ¥
+ * ä¸‹æ¬¡ä½¿ç”¨æ—¶åªéœ€æŸ¥æ‰¾ä¿å­˜çš„ç»“æœ
  */
 
-size_t memorizedCutRod(const vector<int>& _price, const size_t _length)
+size_t memorizedCutRod(const vector<int>& price, const size_t length)
 {
-	vector<int> r(_length + 1, numeric_limits<int>::min());
-	return memorizedCutRodAux(_price, _length, r);
+    vector<int> r(length + 1, numeric_limits<int>::min());
+    return memorizedCutRodAux(price, length, r);
 }
 
-size_t memorizedCutRodAux(const vector<int>& _price, const size_t _length, vector<int>& r)
+size_t memorizedCutRodAux(const vector<int>& price, const size_t length, vector<int>& r)
 {
-	int _max = 0;
-	/*Èç¹ûËùÇóµÄÖµÒÑÖª£¬Ö±½Ó·µ»ØÕâ¸öÖµ*/
-	if (r[_length] >= 0)
-	{
-		return r[_length];
-	}
-	/**/
-	if (_length == 0)
-	{
-		_max = 0;
-	}
-	else
-	{
-		_max = INT_MIN;// numeric_limits<int>::min();
-		
-		for (int i = 1; i <= _length; i++)
-		{
-			/*¸Ö¹Ü½ØÏÂi´ç£¬ÇóÊ£ÏÂn-i´çµÄ×îÓÅ½â*/
-			int aux = _price[i - 1] + memorizedCutRodAux(_price, _length - i, r);
-			_max = max(_max, aux);
-		}
-	}
-	/*nÓ¢´ç¸Ö¹Ü×îÓÅ½âÎªq*/
-	r[_length] = _max;
-	return _max;
+    int _max = 0;
+    /*å¦‚æœæ‰€æ±‚çš„å€¼å·²çŸ¥ï¼Œç›´æ¥è¿”å›è¿™ä¸ªå€¼*/
+    if (r[length] >= 0)
+    {
+        return r[length];
+    }
+    /**/
+    if (length == 0)
+    {
+        _max = 0;
+    }
+    else
+    {
+        _max = INT_MIN;// numeric_limits<int>::min();
+        
+        for (int i = 1; i <= length; i++)
+        {
+            /*é’¢ç®¡æˆªä¸‹iå¯¸ï¼Œæ±‚å‰©ä¸‹n-iå¯¸çš„æœ€ä¼˜è§£*/
+            int aux = price[i - 1] + memorizedCutRodAux(price, length - i, r);
+            _max = max(_max, aux);
+        }
+    }
+    /*nè‹±å¯¸é’¢ç®¡æœ€ä¼˜è§£ä¸ºq*/
+    r[length] = _max;
+    return _max;
 }
 
-size_t bottomUpCutRod(const vector<int>& _price, const size_t _length)
+size_t bottomUpCutRod(const vector<int>& price, const size_t length)
 {
-	vector<int> r(_length + 1, 0);
-	/*r[0]*ÊÇÒ»¸ö±ß½ç*/
-	r[0] = 0;
+    vector<int> r(length + 1, 0);
+    /*r[0]*æ˜¯ä¸€ä¸ªè¾¹ç•Œ*/
+    r[0] = 0;
 
-	/*Çó1~nÓ¢´ç¸Ö¹ÜµÄ×îÓÅ½â*/
-	for (int i = 1; i <= _length; ++i)
-	{
-		/*Çó1~iÓ¢´ç¸Ö¹ÜµÄ×îÓÅ½â*/
-		int _max = INT_MIN; // numeric_limits<int>::min();
-		for (int j = 1; j <= i; ++j)
-		{
-			/*¸Ö¹Ü½ØÏÂj´ç£¬ÇóÊ£ÏÂn-j´çµÄ×îÓÅ½â*/
-			int temp = _price[j - 1] + r[i - j];
-			_max = max(_max, temp);
-		}
-		r[i] = _max;
-	}
-	return r[_length];
+    /*æ±‚1~nè‹±å¯¸é’¢ç®¡çš„æœ€ä¼˜è§£*/
+    for (int i = 1; i <= length; ++i)
+    {
+        /*æ±‚1~iè‹±å¯¸é’¢ç®¡çš„æœ€ä¼˜è§£*/
+        int _max = INT_MIN; // numeric_limits<int>::min();
+        for (int j = 1; j <= i; ++j)
+        {
+            /*é’¢ç®¡æˆªä¸‹jå¯¸ï¼Œæ±‚å‰©ä¸‹n-jå¯¸çš„æœ€ä¼˜è§£*/
+            int temp = price[j - 1] + r[i - j];
+            _max = max(_max, temp);
+        }
+        r[i] = _max;
+    }
+    return r[length];
 }
 
-void extendedBottomUpCutRod(const vector<int>& _price, const size_t _length, vector<int>& _optimal, vector<int>& _s)
+void extendedBottomUpCutRod(const vector<int>& price, const size_t length, vector<int>& optimal, vector<int>& s)
 {
-	
-	_optimal[0] = 0;
-	/*Çó1~nÓ¢´ç¸Ö¹ÜµÄ×îÓÅ½â*/
-	for (int i = 1; i <= _length; ++i)
-	{
-		/*Çó1~iÓ¢´ç¸Ö¹ÜµÄ×îÓÅ½â*/
-		int _max = INT_MAX; // numeric_limits<int>::min();
-		for (int j = 1; j <= i; ++j)
-		{
-			if (_max < _price[j - 1] + _optimal[i - j])
-			{
-				_max = _price[j - 1] + _optimal[i - j];
-				_s[i] = j;
-			}
-		}
-		_optimal[i] = _max;
-	}
-	//return _optimal[_length];
+    
+    optimal[0] = 0;
+    /*æ±‚1~nè‹±å¯¸é’¢ç®¡çš„æœ€ä¼˜è§£*/
+    for (int i = 1; i <= length; ++i)
+    {
+        /*æ±‚1~iè‹±å¯¸é’¢ç®¡çš„æœ€ä¼˜è§£*/
+        int _max = INT_MAX; // numeric_limits<int>::min();
+        for (int j = 1; j <= i; ++j)
+        {
+            if (_max < price[j - 1] + optimal[i - j])
+            {
+                _max = price[j - 1] + optimal[i - j];
+                s[i] = j;
+            }
+        }
+        optimal[i] = _max;
+    }
+    //return optimal[length];
 }
 
-void printCutRodSolution(const vector<int>& _price, const size_t _length)
+void printCutRodSolution(const vector<int>& price, const size_t length)
 {
-	vector<int> firstCut(_length + 1, 0);
-	vector<int> optimal(_length + 1, 0);
-	extendedBottomUpCutRod(_price, _length, optimal, firstCut);
-	cout << "best cutting is ";
-	int restLength = _length;
-	while (restLength > 0)
-	{
-		cout << firstCut[restLength] << " ";
-		restLength = restLength - firstCut[restLength];	
-	}
-	cout << endl << "price is " << optimal[_length] << endl;
+    vector<int> firstCut(length + 1, 0);
+    vector<int> optimal(length + 1, 0);
+    extendedBottomUpCutRod(price, length, optimal, firstCut);
+    cout << "best cutting is ";
+    int restLength = length;
+    while (restLength > 0)
+    {
+        cout << firstCut[restLength] << " ";
+        restLength = restLength - firstCut[restLength];	
+    }
+    cout << endl << "price is " << optimal[length] << endl;
 }
