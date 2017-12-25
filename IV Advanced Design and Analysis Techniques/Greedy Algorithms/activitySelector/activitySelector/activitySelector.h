@@ -9,8 +9,8 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-void recursiveActivitySelector(const vector<int32_t>& a, const vector<int32_t>& s, const vector<int32_t>& f, size_t k, size_t n);
-void greedyActivitySelector();
+void recursiveActivitySelector(vector<int32_t>& a, const vector<int32_t>& s, const vector<int32_t>& f, size_t k, size_t n);
+void greedyActivitySelector(vector<int32_t>& a, const vector<int32_t>& s, const vector<int32_t>& f);
 
 #endif // !_ACTIVITY_SELECTOR_H_
 
