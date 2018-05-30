@@ -2,7 +2,7 @@
 #define _BASIC_H_
 
 
-/*¼ì²âÄÚ´æĞ¹Â©*/
+/*æ£€æµ‹å†…å­˜æ³„æ¼*/
 #define CHECK_MEMORY_LEAKS
 
 #ifdef CHECK_MEMORY_LEAKS
@@ -14,13 +14,13 @@
 #endif
 
 /**
-* ½ûÖ¹ÀàµÄ¿½±´£¬
-* nodeºÍbinaryTreeÖĞ¶¼ÓĞÖ¸Õë£¬ĞèÒªÉî¿½±´£¬ÊµÔÚÃ»±ØÒª
+* ç¦æ­¢ç±»çš„æ‹·è´ï¼Œ
+* nodeå’ŒbinaryTreeä¸­éƒ½æœ‰æŒ‡é’ˆï¼Œéœ€è¦æ·±æ‹·è´ï¼Œå®åœ¨æ²¡å¿…è¦
 */
 #define DISABLE_COPY_AND_ASSIGN(className) \
 private: \
-	className(const className&); \
-	className& operator=(const className&)
+    className(const className&); \
+    className& operator=(const className&)
 
 
 
@@ -28,8 +28,8 @@ private: \
 #endif
 
 /*
-×÷Õß£ºvczh
-Á´½Ó£ºhttps ://www.zhihu.com/question/63946754/answer/215606096
-À´Ô´£ºÖªºõ
-Öø×÷È¨¹é×÷ÕßËùÓĞ£¬×ªÔØÇëÁªÏµ×÷Õß»ñµÃÊÚÈ¨¡£
+ä½œè€…ï¼švczh
+é“¾æ¥ï¼šhttps ://www.zhihu.com/question/63946754/answer/215606096
+æ¥æºï¼šçŸ¥ä¹
+è‘—ä½œæƒå½’ä½œè€…æ‰€æœ‰ï¼Œè½¬è½½è¯·è”ç³»ä½œè€…è·å¾—æˆæƒã€‚
 */

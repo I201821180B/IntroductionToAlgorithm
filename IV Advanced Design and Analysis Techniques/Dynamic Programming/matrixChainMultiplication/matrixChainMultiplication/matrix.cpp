@@ -2,73 +2,73 @@
 
 
 template<typename T>
-matrix<T>::matrix(const size_t _row, const size_t _col)
-	: row_(_row), col_(_col),m_(_row, vector<T>(_col, 0))
+matrix<T>::matrix(const size_t row, const size_t col)
+    : row_(row), col_(col),m_(row, vector<T>(col, 0))
 {
 }
 
 template<typename T>
-matrix<T>::matrix(const vector<T>& _v, const size_t _row, const size_t _col)
-	: matrix(_row, _col)
+matrix<T>::matrix(const vector<T>& v, const size_t row, const size_t col)
+    : matrix(row, col)
 {
-	assert(_v.size() >= _row*_col);
-	for (int i = 0; i < _row; ++i)
-	{
-		for (int j = 0; j < _col; ++j)
-		{
-			m_[i][j] = _v[i*_col + j];
-		}
-	}
+    assert(v.size() >= row*col);
+    for (int i = 0; i < row; ++i)
+    {
+        for (int j = 0; j < col; ++j)
+        {
+            m_[i][j] = v[i*col + j];
+        }
+    }
 }
 
-// ÒÆ¶¯¹¹Ôìº¯Êý
+// ç§»åŠ¨æž„é€ å‡½æ•°
 template<typename T>
-matrix<T>::matrix(matrix<T>&& _mx)
-	: row_(_mx.row_), col_(_mx.col_)
+matrix<T>::matrix(matrix<T>&& mx)
+    : row_(mx.row_), col_(mx.col_)
 {
-	cout << "move ctor" << endl;
-	m_ = std::move(_mx.m_);
+    cout << "move ctor" << endl;
+    m_ = std::move(mx.m_);
 }
 
-// const¶ÔÏó
+// constå¯¹è±¡
 template<typename T>
 const vector<T>& matrix<T>::operator[](const size_t idx) const
 {
-	return m_[idx];
+    return m_[idx];
 }
 
 
-// ÒÆ¶¯¸³Öµº¯Êý
+// ç§»åŠ¨èµ‹å€¼å‡½æ•°
 template<typename T>
-matrix<T>& matrix<T>::operator=(matrix<T>&& _mx)
+matrix<T>& matrix<T>::operator=(matrix<T>&& mx)
 {
-	cout << "move operator" << endl;
-	row_ = _mx.row_;
-	col_ = _mx.col_;
-	m_ = std::move(_mx.m_);
-	return *this;
+    cout << "move operator" << endl;
+    row_ = mx.row_;
+    col_ = mx.col_;
+    m_ = std::move(mx.m_);
+    return *this;
 }
 
-// ·Çconst¶ÔÏó
+// éžconstå¯¹è±¡
 template<typename T>
 vector<T>& matrix<T>::operator[](const size_t idx)
 {
-	
-	return m_[idx];
+    
+    return m_[idx];
 }
 
 template<typename T>
 void matrix<T>::print()
 {
-	cout << endl;
-	for (size_t i = 0; i < row_; ++i)
-	{
-		for (int j = 0; j < col_; ++j)
-		{
-			cout << m_[i][j] << " ";
-		}
-		cout << endl;
-	}
+    cout << endl;
+    for (size_t i = 0; i < row_; ++i)
+    {
+        for (int j = 0; j < col_; ++j)
+        {
+            cout << m_[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
 
 

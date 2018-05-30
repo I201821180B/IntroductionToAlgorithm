@@ -1,97 +1,97 @@
 #include "optimalBinarySearchTree.h"
 
 #define RANGE(_i, _from, _to) \
-	for(int32_t _i = _from; _i < _to +1; ++_i)
+    for(int32_t _i = _from; _i < _to +1; ++_i)
 
 
 void optimalBst(const vector<float>& _p, const vector<float>& _q, size_t _n, 
-	vector<vector<float>>& _e, vector<vector<size_t>>& _r)
+    vector<vector<float>>& _e, vector<vector<size_t>>& _r)
 {
-	// ³õÊ¼»¯
-	_e.resize(_n + 2, vector<float>(_n + 1, 0));
-	vector<vector<float>> w(_n + 2, vector<float>(_n + 1, 0));
-	_r.resize(_n + 1, vector<size_t>(_n + 1, 0));
+    // åˆå§‹åŒ–
+    _e.resize(_n + 2, vector<float>(_n + 1, 0));
+    vector<vector<float>> w(_n + 2, vector<float>(_n + 1, 0));
+    _r.resize(_n + 1, vector<size_t>(_n + 1, 0));
 
-	// ÎªÖ»°üº¬¹Ø¼ü×ÖdiµÄ×ÓÊ÷ÉèÖÃ±ß½çÄÚÈİ
-	for (int32_t i = 1; i < _n + 2; ++i)
-	{
-		_e[i][i-1] = _q[i-1];
-		w[i][i-1] = _q[i-1];
-	}
+    // ä¸ºåªåŒ…å«å…³é”®å­—diçš„å­æ ‘è®¾ç½®è¾¹ç•Œå†…å®¹
+    for (int32_t i = 1; i < _n + 2; ++i)
+    {
+        _e[i][i-1] = _q[i-1];
+        w[i][i-1] = _q[i-1];
+    }
 
-	// lenÊÇki~kj×ÓÊ÷µÄ¡°³¤¶È¡±
-	//for (int32_t len = 1; len < _n + 1; ++len)
-	RANGE(len, 1, _n)
-	{
-		//for (int32_t i = 1; i < _n - len + 2; ++i)
-		// iÊÇ×ÓÊ÷¿ªÊ¼µÄÎ»ÖÃ
-		// ¼ÆËã³¤¶ÈÎªlenµÄkiµ½kj×ÓÊ÷µÄ×îÓÅËÑË÷ÆÚÍû
-		RANGE(i, 1, _n - len + 1)
-		{
-			int32_t j = i + len - 1;
-			_e[i][j] = FLT_MAX;//numeric_limits<int32_t>::max();
+    // lenæ˜¯ki~kjå­æ ‘çš„â€œé•¿åº¦â€
+    //for (int32_t len = 1; len < _n + 1; ++len)
+    RANGE(len, 1, _n)
+    {
+        //for (int32_t i = 1; i < _n - len + 2; ++i)
+        // iæ˜¯å­æ ‘å¼€å§‹çš„ä½ç½®
+        // è®¡ç®—é•¿åº¦ä¸ºlençš„kiåˆ°kjå­æ ‘çš„æœ€ä¼˜æœç´¢æœŸæœ›
+        RANGE(i, 1, _n - len + 1)
+        {
+            int32_t j = i + len - 1;
+            _e[i][j] = FLT_MAX;//numeric_limits<int32_t>::max();
 
-			// kiµ½kj+1×ÓÊ÷µÄÆÚÍû´ú¼Û = kiµ½kjµÄ×ÓÊ÷ÆÚÍû´ú¼Û + kj+1½ÚµãµÄËÑË÷³É¹¦ÆµÂÊ + kj+1½ÚµãµÄËÑË÷Ê§°ÜÆµÂÊ
-			w[i][j] = w[i][j - 1] + _p[j - 1] + _q[j];
+            // kiåˆ°kj+1å­æ ‘çš„æœŸæœ›ä»£ä»· = kiåˆ°kjçš„å­æ ‘æœŸæœ›ä»£ä»· + kj+1èŠ‚ç‚¹çš„æœç´¢æˆåŠŸé¢‘ç‡ + kj+1èŠ‚ç‚¹çš„æœç´¢å¤±è´¥é¢‘ç‡
+            w[i][j] = w[i][j - 1] + _p[j - 1] + _q[j];
 
-			// Ñ¡È¡¸ù½Úµã£¬È¡×îÓÅ¸ù½Úµã
-			for (int32_t r = i; r < j + 1; ++r)
-			{
-				/** ki~kj×ÓÊ÷µÄËÑË÷ÆÚÍû = ki~kr-1×ó×ÓÊ÷¶ÀÁ¢µÄËÑË÷ÆÚÍû 
-				 *                     + kr+1~kj×ó×ÓÊ÷¶ÀÁ¢µÄËÑË÷ÆÚÍû 
-				 *                     + ki~kj×ÓÊ÷ÒòÎªÉî¶ÈÔö¼Ó1µ¼ÖÂÔö¼ÓµÄËÑË÷ÆÚÍû
-				 * ¶ÀÁ¢µÄÒâË¼ÊÇ£¬½«ki~kr-1½Úµãµ¥¶ÀÄÃ³öÀ´ÄÜ´ïµ½µÄËÑË÷ÆÚÍû
-				 * Éî¶ÈÔö¼Ó1µÄÒâË¼ÊÇ£¬ki~kr-1½Úµã¹¹³ÉµÄ¶ÀÁ¢×ÓÊ÷³ÉÁËkr½ÚµãµÄ×ó×ÓÊ÷£¬ki~kr-1½ÚµãÉî¶È¾ùÔö¼Ó1
-				 */
-				float t = _e[i][r - 1] + _e[r + 1][j] + w[i][j];
-				if (t < _e[i][j])
-				{
-					_e[i][j] = t;
-					_r[i][j] = r;
-				}
-			}
-		}
-	}
+            // é€‰å–æ ¹èŠ‚ç‚¹ï¼Œå–æœ€ä¼˜æ ¹èŠ‚ç‚¹
+            for (int32_t r = i; r < j + 1; ++r)
+            {
+                /** ki~kjå­æ ‘çš„æœç´¢æœŸæœ› = ki~kr-1å·¦å­æ ‘ç‹¬ç«‹çš„æœç´¢æœŸæœ› 
+                 *                     + kr+1~kjå·¦å­æ ‘ç‹¬ç«‹çš„æœç´¢æœŸæœ› 
+                 *                     + ki~kjå­æ ‘å› ä¸ºæ·±åº¦å¢åŠ 1å¯¼è‡´å¢åŠ çš„æœç´¢æœŸæœ›
+                 * ç‹¬ç«‹çš„æ„æ€æ˜¯ï¼Œå°†ki~kr-1èŠ‚ç‚¹å•ç‹¬æ‹¿å‡ºæ¥èƒ½è¾¾åˆ°çš„æœç´¢æœŸæœ›
+                 * æ·±åº¦å¢åŠ 1çš„æ„æ€æ˜¯ï¼Œki~kr-1èŠ‚ç‚¹æ„æˆçš„ç‹¬ç«‹å­æ ‘æˆäº†krèŠ‚ç‚¹çš„å·¦å­æ ‘ï¼Œki~kr-1èŠ‚ç‚¹æ·±åº¦å‡å¢åŠ 1
+                 */
+                float t = _e[i][r - 1] + _e[r + 1][j] + w[i][j];
+                if (t < _e[i][j])
+                {
+                    _e[i][j] = t;
+                    _r[i][j] = r;
+                }
+            }
+        }
+    }
 }
 
-// È¥µôeºÍrÖĞÎ´Ê¹ÓÃµÄ¿Õ¼ä
+// å»æ‰eå’Œrä¸­æœªä½¿ç”¨çš„ç©ºé—´
 void optimalBstRe(const vector<float>& _p, const vector<float>& _q, size_t _n,
-	vector<vector<float>>& _e, vector<vector<size_t>>& _r)
+    vector<vector<float>>& _e, vector<vector<size_t>>& _r)
 {
-	// ³õÊ¼»¯
-	_e.resize(_n + 1, vector<float>(_n + 1, 0));
-	vector<vector<float>> w(_n + 1, vector<float>(_n + 1, 0));
-	_r.resize(_n, vector<size_t>(_n, 0));
+    // åˆå§‹åŒ–
+    _e.resize(_n + 1, vector<float>(_n + 1, 0));
+    vector<vector<float>> w(_n + 1, vector<float>(_n + 1, 0));
+    _r.resize(_n, vector<size_t>(_n, 0));
 
-	// ÎªÖ»°üº¬¹Ø¼ü×ÖdiµÄ×ÓÊ÷ÉèÖÃ±ß½çÄÚÈİ
-	for (int32_t i = 0; i < _n + 1; ++i)
-	{
-		_e[i][i] = _q[i];
-		w[i][i] = _q[i];
-	}
+    // ä¸ºåªåŒ…å«å…³é”®å­—diçš„å­æ ‘è®¾ç½®è¾¹ç•Œå†…å®¹
+    for (int32_t i = 0; i < _n + 1; ++i)
+    {
+        _e[i][i] = _q[i];
+        w[i][i] = _q[i];
+    }
 
-	// lenÊÇkiµ½kj×ÓÊ÷µÄ¡°³¤¶È¡±
-	//for (int32_t len = 1; len < _n + 1; ++len)
-	RANGE(len, 1, _n)
-	{
-		//for (int32_t i = 1; i < _n - len + 2; ++i)
-		RANGE(i, 0, _n - len)
-		{
-			int32_t j = i + len;
-			_e[i][j] = FLT_MAX;//numeric_limits<int32_t>::max();
+    // lenæ˜¯kiåˆ°kjå­æ ‘çš„â€œé•¿åº¦â€
+    //for (int32_t len = 1; len < _n + 1; ++len)
+    RANGE(len, 1, _n)
+    {
+        //for (int32_t i = 1; i < _n - len + 2; ++i)
+        RANGE(i, 0, _n - len)
+        {
+            int32_t j = i + len;
+            _e[i][j] = FLT_MAX;//numeric_limits<int32_t>::max();
 
-			// kiµ½kj+1×ÓÊ÷µÄÆÚÍû´ú¼Û = kiµ½kjµÄ×ÓÊ÷ÆÚÍû´ú¼Û + kj+1½ÚµãµÄËÑË÷³É¹¦ÆµÂÊ + kj+1½ÚµãµÄËÑË÷Ê§°ÜÆµÂÊ
-			w[i][j] = w[i][j - 1] + _p[j - 1] + _q[j];
-			// Ñ¡È¡¸ù½Úµã£¬
-			for (int32_t r = i + 1; r < j + 1; ++r)
-			{
-				float t = _e[i][r - 1] + _e[r][j] + w[i][j];
-				if (t < _e[i][j])
-				{
-					_e[i][j] = t;
-					_r[i][j - 1] = r;
-				}
-			}
-		}
-	}
+            // kiåˆ°kj+1å­æ ‘çš„æœŸæœ›ä»£ä»· = kiåˆ°kjçš„å­æ ‘æœŸæœ›ä»£ä»· + kj+1èŠ‚ç‚¹çš„æœç´¢æˆåŠŸé¢‘ç‡ + kj+1èŠ‚ç‚¹çš„æœç´¢å¤±è´¥é¢‘ç‡
+            w[i][j] = w[i][j - 1] + _p[j - 1] + _q[j];
+            // é€‰å–æ ¹èŠ‚ç‚¹ï¼Œ
+            for (int32_t r = i + 1; r < j + 1; ++r)
+            {
+                float t = _e[i][r - 1] + _e[r][j] + w[i][j];
+                if (t < _e[i][j])
+                {
+                    _e[i][j] = t;
+                    _r[i][j - 1] = r;
+                }
+            }
+        }
+    }
 }

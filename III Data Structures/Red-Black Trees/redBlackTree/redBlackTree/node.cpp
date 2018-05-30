@@ -3,24 +3,24 @@
 
 template<typename T>
 node<T>::node()
-	: left_(nullptr), right_(nullptr), parent_(nullptr)
+    : left_(nullptr), right_(nullptr), parent_(nullptr)
 {
 } 
 
 template<typename T>
-node<T>::node(COLOR _color)
-	: node()/*, color_(_color)*/
+node<T>::node(COLOR color)
+    : node()/*, color_(color)*/
 {
-	color_ = _color;
+    color_ = color;
 }
 
 template<typename T>
-node<T>::node(T _key)
-	: node()/*, key_(_key)*/
+node<T>::node(T key)
+    : node()/*, key_(key)*/
 {
-	key_ = _key;
-	//color_ = RED;
-	std::cout << "node constructor" << std::endl;
+    key_ = key;
+    //color_ = RED;
+    std::cout << "node constructor" << std::endl;
 }
 
 //template<typename T>
@@ -32,44 +32,44 @@ node<T>::node(T _key)
 //	}
 //}
 
-/*不能调用委托构造函数之后，再初始化别的变量*/
+/*涓嶈兘璋冪敤濮旀墭鏋勯�犲嚱鏁颁箣鍚庯紝鍐嶅垵濮嬪寲鍒殑鍙橀噺*/
 template<typename T>
-node<T>::node(COLOR _color, T _key)
-	: node()/*, color_(_color), key_(_key)*/
+node<T>::node(COLOR color, T key)
+    : node()/*, color_(color), key_(key)*/
 {
-	color_ = _color;
-	key_ = _key;
+    color_ = color;
+    key_ = key;
 }
 
 
 template<typename T>
-void node<T>::setColor(COLOR _color)
+void node<T>::setColor(COLOR color)
 {
-	this->color_ = _color;
+    this->color_ = color;
 }
 
 template<typename T>
-void node<T>::setKey(T _key)
+void node<T>::setKey(T key)
 {
-	this->key_ = _key;
+    this->key_ = key;
 }
 
 template<typename T>
-void node<T>::setLeft(pNode _newleft)
+void node<T>::setLeft(pNode newleft)
 {
-	this->left_ = _newleft;
+    this->left_ = newleft;
 }
 
 template<typename T>
-void node<T>::setRight(pNode _newright)
+void node<T>::setRight(pNode newright)
 {
-	this->right_ = _newright;
+    this->right_ = newright;
 }
 
 template<typename T>
-void node<T>::setParent(pNode _newparent)
+void node<T>::setParent(pNode newparent)
 {
-	this->parent_ = _newparent;
+    this->parent_ = newparent;
 }
 
 

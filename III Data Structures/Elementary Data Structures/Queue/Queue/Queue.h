@@ -13,17 +13,17 @@ template<typename T>
 class queue
 {
 public:
-	queue();
-	queue(initializer_list<T> il);
-	//~queue();
-	bool isEmpty();
-	void enqueue(T x);
-	T dequeue();
-	uint32_t size();
-	void print();
+    queue();
+    queue(initializer_list<T> il);
+    //~queue();
+    bool isEmpty();
+    void enqueue(T x);
+    T dequeue();
+    uint32_t size();
+    void print();
 private:
-	linkedList<T> q;
-	//int32_t size;
+    linkedList<T> q;
+    //int32_t size;
 };
 
 #endif

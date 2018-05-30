@@ -1,66 +1,66 @@
 #include "matrixChainMultiplication.h"
 
-matrix<int> matrixMultiply(const matrix<int32_t>& _a, const matrix<int32_t>& _b)
+matrix<int> matrixMultiply(const matrix<int32_t>& a, const matrix<int32_t>& b)
 {
-	assert(_a.col_ == _b.row_);
-	matrix<int32_t> c(_a.row_, _b.col_);
-	for (size_t i = 0; i < _a.row_; ++i)
-	{
-		for (size_t j = 0; j < _b.col_; ++j)
-		{
-			for (size_t k = 0; k < _a.col_; ++k)
-			{
-				c[i][j] = c[i][j] + _a[i][k] * _b[k][j];
-			}
-		}
-	}
-	return c;
+    assert(a.col_ == b.row_);
+    matrix<int32_t> c(a.row_, b.col_);
+    for (size_t i = 0; i < a.row_; ++i)
+    {
+        for (size_t j = 0; j < b.col_; ++j)
+        {
+            for (size_t k = 0; k < a.col_; ++k)
+            {
+                c[i][j] = c[i][j] + a[i][k] * b[k][j];
+            }
+        }
+    }
+    return c;
 }
 
-void matrixChainOrder(const vector<int32_t>& _p, vector<vector<int32_t>>& _m, vector<vector<int32_t>>& _s)
+void matrixChainOrder(const vector<int32_t>& p, vector<vector<int32_t>>& m, vector<vector<int32_t>>& s)
 {
-	// ³õÊ¼»¯¸¨Öú±í
-	size_t n = _p.size() - 1;
-	_m.resize(n, vector<int32_t>(n, 0));
-	_s.resize(n - 1, vector<int32_t>(n, 0));
+    // åˆå§‹åŒ–è¾…åŠ©è¡¨
+    size_t n = p.size() - 1;
+    m.resize(n, vector<int32_t>(n, 0));
+    s.resize(n - 1, vector<int32_t>(n, 0));
 
-	// Ñ¡È¡×ÓÁ´µÄ³¤¶È
-	for (int32_t chainLength = 2; chainLength <= n; ++chainLength)
-	{
-		// iºÍj·Ö±ğÊÇ×ÓÁ´µÄÆğµãºÍÖÕµã£¬³¤¶ÈÎªchainLength
-		for (int32_t i = 0; i < n - chainLength + 1; ++i)
-		{
-			int32_t j = i + chainLength - 1;
-			_m[i][j] = numeric_limits<int32_t>::max();
-			// ·Ö¸îijÁ´
-			for (int32_t k = i; k < j; ++k)
-			{
-				// ¼ÆËã×îÓÅÖµ
-				int32_t q = _m[i][k] + _m[k + 1][j] + _p[i] * _p[k + 1] * _p[j + 1];
-				if (q < _m[i][j])
-				{
-					// ¸üĞÂ×îÓÅÖµ
-					_m[i][j] = q;
-					_s[i][j] = k;
-				}
-			}
-		}
-	}
+    // é€‰å–å­é“¾çš„é•¿åº¦
+    for (int32_t chainLength = 2; chainLength <= n; ++chainLength)
+    {
+        // iå’Œjåˆ†åˆ«æ˜¯å­é“¾çš„èµ·ç‚¹å’Œç»ˆç‚¹ï¼Œé•¿åº¦ä¸ºchainLength
+        for (int32_t i = 0; i < n - chainLength + 1; ++i)
+        {
+            int32_t j = i + chainLength - 1;
+            m[i][j] = numeric_limits<int32_t>::max();
+            // åˆ†å‰²ijé“¾
+            for (int32_t k = i; k < j; ++k)
+            {
+                // è®¡ç®—æœ€ä¼˜å€¼
+                int32_t q = m[i][k] + m[k + 1][j] + p[i] * p[k + 1] * p[j + 1];
+                if (q < m[i][j])
+                {
+                    // æ›´æ–°æœ€ä¼˜å€¼
+                    m[i][j] = q;
+                    s[i][j] = k;
+                }
+            }
+        }
+    }
 }
 
 
 
-void printOptimalParens(const vector<vector<int32_t>>& _s, size_t _i, size_t _j)
+void printOptimalParens(const vector<vector<int32_t>>& s, size_t _i, size_t _j)
 {
-	if (_i == _j)
-	{
-		cout << "A" << _i;
-	}
-	else
-	{
-		cout << "(";
-		printOptimalParens(_s, _i, _s[_i][_j]);
-		printOptimalParens(_s, _s[_i][_j]+1, _j);
-		cout << ")";
-	}
+    if (_i == _j)
+    {
+        cout << "A" << _i;
+    }
+    else
+    {
+        cout << "(";
+        printOptimalParens(s, _i, s[_i][_j]);
+        printOptimalParens(s, s[_i][_j]+1, _j);
+        cout << ")";
+    }
 }
